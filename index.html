@@ -233,6 +233,159 @@
         .modal-footer {
             border-top: 1px solid rgba(255, 255, 255, 0.2);
         }
+        
+        .coin {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            margin: 20px auto;
+            position: relative;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: transform 0.3s;
+        }
+        
+        .coin:hover {
+            transform: scale(1.05);
+        }
+        
+        .coin::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            height: 80%;
+            border: 3px solid #b8860b;
+            border-radius: 50%;
+        }
+        
+        .coin.flipping {
+            animation: flip 1s ease-in-out;
+        }
+        
+        @keyframes flip {
+            0% { transform: rotateY(0); }
+            100% { transform: rotateY(1800deg); }
+        }
+        
+        .pitch-map {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(180deg, #2ecc71 0%, #27ae60 100%);
+            border: 2px solid #fff;
+            border-radius: 10px;
+            position: relative;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+        
+        .pitch-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.3) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.3) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        
+        .wicket {
+            position: absolute;
+            width: 4px;
+            height: 60px;
+            background: #fff;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .wicket.left { left: 20px; }
+        .wicket.right { right: 20px; }
+        
+        .crease {
+            position: absolute;
+            width: 40px;
+            height: 2px;
+            background: #fff;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .crease.left { left: 20px; }
+        .crease.right { right: 20px; }
+        
+        .pitch-marker {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: red;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            z-index: 10;
+        }
+        
+        .ground-map {
+            width: 100%;
+            height: 300px;
+            background: radial-gradient(circle, #27ae60 0%, #2ecc71 70%, #1abc9c 100%);
+            border: 2px solid #fff;
+            border-radius: 50%;
+            position: relative;
+            cursor: pointer;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        
+        .boundary {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 2px dashed rgba(255,255,255,0.5);
+            border-radius: 50%;
+        }
+        
+        .six-point {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #3498db;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+        }
+        
+        .fielder-position {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background: #e74c3c;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .fielder-position.cover { top: 20%; left: 50%; }
+        .fielder-position.mid-off { top: 30%; left: 35%; }
+        .fielder-position.mid-on { top: 30%; left: 65%; }
+        .fielder-position.square-leg { top: 60%; left: 75%; }
+        .fielder-position.fine-leg { top: 75%; left: 85%; }
+        .fielder-position.third-man { top: 25%; left: 85%; }
+        .fielder-position.gully { top: 25%; left: 25%; }
+        .fielder-position.slip { top: 20%; left: 35%; }
+        .fielder-position.point { top: 20%; left: 65%; }
+        .fielder-position.third-cover { top: 20%; left: 75%; }
     </style>
 </head>
 <body>
@@ -252,6 +405,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#" id="newMatchLink"><i class="fas fa-plus-circle"></i> New Match</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="tossLink"><i class="fas fa-coins"></i> Toss</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#" id="viewMatchLink"><i class="fas fa-eye"></i> View Match</a>
@@ -440,6 +596,76 @@
             </div>
         </div>
 
+        <!-- Toss Screen -->
+        <div id="tossScreen" class="d-none">
+            <h2 class="section-title">Coin Toss</h2>
+            
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header text-center">
+                            <i class="fas fa-coins"></i> Toss Ceremony
+                        </div>
+                        <div class="card-body text-center">
+                            <h4 class="mb-4">Captain Selection</h4>
+                            
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <h5 id="team1NameToss">Team 1</h5>
+                                    <div class="mb-3">
+                                        <select class="form-select" id="team1Captain">
+                                            <option value="">Select Captain</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Choose:</label>
+                                        <div>
+                                            <button class="btn btn-outline-primary me-2" id="team1Heads">Heads</button>
+                                            <button class="btn btn-outline-primary" id="team1Tails">Tails</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <h5 id="team2NameToss">Team 2</h5>
+                                    <div class="mb-3">
+                                        <select class="form-select" id="team2Captain">
+                                            <option value="">Select Captain</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Choose:</label>
+                                        <div>
+                                            <button class="btn btn-outline-primary me-2" id="team2Heads">Heads</button>
+                                            <button class="btn btn-outline-primary" id="team2Tails">Tails</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="coin" id="tossCoin">
+                                <div class="coin-inner">
+                                    <div class="coin-front">H</div>
+                                    <div class="coin-back">T</div>
+                                </div>
+                            </div>
+                            
+                            <button class="btn btn-primary btn-lg mb-3" id="flipCoinBtn">
+                                <i class="fas fa-sync"></i> Flip Coin
+                            </button>
+                            
+                            <div class="result-display mt-3" id="tossResult" style="display: none;">
+                                <h3 class="text-success">Result: <span id="tossResultText"></span></h3>
+                                <p id="tossWinnerText"></p>
+                                <button class="btn btn-success" id="useTossResultBtn">
+                                    <i class="fas fa-check"></i> Use This Result
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Scoring Screen -->
         <div id="scoringScreen" class="d-none">
             <div class="d-flex justify-content-between align-items-center mb-4">
@@ -503,6 +729,53 @@
                                         <button class="btn btn-danger wicket-btn" data-wicket="runout">Run Out</button>
                                         <button class="btn btn-danger wicket-btn" data-wicket="mankading">Mankading</button>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Ball Tracking Section -->
+                    <div class="card mt-4">
+                        <div class="card-header">
+                            <i class="fas fa-baseball-ball"></i> Ball Tracking
+                        </div>
+                        <div class="card-body">
+                            <ul class="nav nav-tabs" id="ballTrackingTabs" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="pitch-tab" data-bs-toggle="tab" data-bs-target="#pitch" type="button" role="tab">Pitch Map</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="ground-tab" data-bs-toggle="tab" data-bs-target="#ground" type="button" role="tab">Ground Map</button>
+                                </li>
+                            </ul>
+                            <div class="tab-content mt-3" id="ballTrackingContent">
+                                <div class="tab-pane fade show active" id="pitch" role="tabpanel">
+                                    <p>Click on the pitch to mark where the ball pitched:</p>
+                                    <div class="pitch-map" id="pitchMap">
+                                        <div class="pitch-lines"></div>
+                                        <div class="wicket left"></div>
+                                        <div class="wicket right"></div>
+                                        <div class="crease left"></div>
+                                        <div class="crease right"></div>
+                                    </div>
+                                    <button class="btn btn-primary" id="pitchBallBtn">Pitch Ball</button>
+                                </div>
+                                <div class="tab-pane fade" id="ground" role="tabpanel">
+                                    <p>Click on the ground to mark where the ball went:</p>
+                                    <div class="ground-map" id="groundMap">
+                                        <div class="boundary"></div>
+                                        <div class="fielder-position cover">CO</div>
+                                        <div class="fielder-position mid-off">MO</div>
+                                        <div class="fielder-position mid-on">MI</div>
+                                        <div class="fielder-position square-leg">SL</div>
+                                        <div class="fielder-position fine-leg">FL</div>
+                                        <div class="fielder-position third-man">TM</div>
+                                        <div class="fielder-position gully">GU</div>
+                                        <div class="fielder-position slip">SL</div>
+                                        <div class="fielder-position point">PO</div>
+                                        <div class="fielder-position third-cover">TC</div>
+                                    </div>
+                                    <button class="btn btn-primary" id="groundBallBtn">Ground Ball</button>
                                 </div>
                             </div>
                         </div>
@@ -699,6 +972,102 @@
                 </div>
             </div>
         </div>
+
+        <!-- Viewer Screen -->
+        <div id="viewerScreen" class="d-none">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="section-title mb-0">Live Match Viewer</h2>
+                <div class="match-code-container">
+                    <span class="match-code" id="viewerMatchCode">ABC123</span>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <span><i class="fas fa-tachometer-alt"></i> Current Score</span>
+                            <span class="live-indicator"></span> LIVE
+                        </div>
+                        <div class="card-body">
+                            <div class="score-display" id="viewerCurrentScore">0/0</div>
+                            <div class="text-center mb-3">
+                                <span id="viewerOversDisplay">0.0</span> Overs | 
+                                <span id="viewerRunRate">0.00</span> RR | 
+                                <span id="viewerCurrentBatsmen">Batsmen: - / -</span>
+                            </div>
+                            
+                            <div class="ball-display" id="viewerBallDisplay">
+                                <!-- Balls will be added here dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Viewer Commentary Section -->
+                    <div class="card mt-4">
+                        <div class="card-header">
+                            <i class="fas fa-comment"></i> Live Commentary
+                        </div>
+                        <div class="card-body">
+                            <div class="commentary-box" id="viewerCommentaryBox">
+                                <div class="commentary-item">
+                                    Waiting for match to start...
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-chart-bar"></i> Match Progress
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between">
+                                    <span>Overs Progress</span>
+                                    <span id="viewerOversProgressText">0/20</span>
+                                </div>
+                                <div class="overs-progress mt-2">
+                                    <div class="overs-progress-bar" id="viewerOversProgressBar" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between">
+                                    <span>Target</span>
+                                    <span id="viewerTargetScore">-</span>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between">
+                                    <span>Required Rate</span>
+                                    <span id="viewerRequiredRate">-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fas fa-users"></i> Current Players
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <h6>Batting</h6>
+                                <div id="viewerCurrentBatsmenList">-</div>
+                            </div>
+                            <div class="mb-3">
+                                <h6>Bowling</h6>
+                                <div id="viewerCurrentBowler">-</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- View Match Modal -->
@@ -755,6 +1124,42 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                     <button type="button" class="btn btn-primary" id="confirmNoBallBtn">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Catch Details Modal -->
+    <div class="modal fade" id="catchModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content bg-dark text-light">
+                <div class="modal-header">
+                    <h5 class="modal-title">Catch Details</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Fielder Name</label>
+                        <input type="text" class="form-control" id="fielderName" placeholder="Enter fielder name">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Was it a fantastic catch?</label>
+                        <div>
+                            <button class="btn btn-success me-2" id="fantasticCatchBtn">Yes</button>
+                            <button class="btn btn-warning" id="normalCatchBtn">No</button>
+                        </div>
+                    </div>
+                    <div class="mb-3" id="dropCatchSection" style="display: none;">
+                        <label class="form-label">Drop Catch Type</label>
+                        <div>
+                            <button class="btn btn-danger me-2" id="easyDropBtn">Easy Catch</button>
+                            <button class="btn btn-warning" id="toughDropBtn">Tough Catch</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="confirmCatchBtn">Confirm</button>
                 </div>
             </div>
         </div>
@@ -834,14 +1239,18 @@
             currentBatsmen: [],
             currentBowler: null,
             recentWickets: [],
-            commentary: []
+            commentary: [],
+            pitchMarkers: [],
+            groundMarkers: []
         };
 
         // DOM Elements
         const welcomeScreen = document.getElementById('welcomeScreen');
         const setupScreen = document.getElementById('setupScreen');
+        const tossScreen = document.getElementById('tossScreen');
         const scoringScreen = document.getElementById('scoringScreen');
         const summaryScreen = document.getElementById('summaryScreen');
+        const viewerScreen = document.getElementById('viewerScreen');
         const matchCodeDisplay = document.getElementById('matchCodeDisplay');
         const currentScore = document.getElementById('currentScore');
         const oversDisplay = document.getElementById('oversDisplay');
@@ -863,6 +1272,24 @@
             document.getElementById('shareScorecardImageBtn').addEventListener('click', shareScorecardAsImage);
             document.getElementById('addCommentaryBtn').addEventListener('click', addCommentary);
             document.getElementById('confirmNoBallBtn').addEventListener('click', confirmNoBall);
+            document.getElementById('joinMatchBtn').addEventListener('click', joinMatch);
+            document.getElementById('pitchBallBtn').addEventListener('click', showPitchMap);
+            document.getElementById('groundBallBtn').addEventListener('click', showGroundMap);
+            
+            // Toss events
+            document.getElementById('flipCoinBtn').addEventListener('click', flipCoin);
+            document.getElementById('useTossResultBtn').addEventListener('click', useTossResult);
+            document.getElementById('team1Heads').addEventListener('click', () => selectTossChoice('team1', 'heads'));
+            document.getElementById('team1Tails').addEventListener('click', () => selectTossChoice('team1', 'tails'));
+            document.getElementById('team2Heads').addEventListener('click', () => selectTossChoice('team2', 'heads'));
+            document.getElementById('team2Tails').addEventListener('click', () => selectTossChoice('team2', 'tails'));
+            
+            // Catch modal events
+            document.getElementById('fantasticCatchBtn').addEventListener('click', () => showDropCatch(false));
+            document.getElementById('normalCatchBtn').addEventListener('click', () => showDropCatch(true));
+            document.getElementById('easyDropBtn').addEventListener('click', () => confirmCatch('easy'));
+            document.getElementById('toughDropBtn').addEventListener('click', () => confirmCatch('tough'));
+            document.getElementById('confirmCatchBtn').addEventListener('click', () => confirmCatch('normal'));
             
             // No ball type change
             document.getElementById('noBallType').addEventListener('change', function() {
@@ -887,7 +1314,14 @@
             });
             
             document.querySelectorAll('[data-wicket]').forEach(btn => {
-                btn.addEventListener('click', () => addWicket(btn.dataset.wicket));
+                btn.addEventListener('click', () => {
+                    if (btn.dataset.wicket === 'caught') {
+                        const modal = new bootstrap.Modal(document.getElementById('catchModal'));
+                        modal.show();
+                    } else {
+                        addWicket(btn.dataset.wicket);
+                    }
+                });
             });
             
             // Generate initial match code
@@ -903,6 +1337,109 @@
             welcomeScreen.classList.add('d-none');
             setupScreen.classList.remove('d-none');
             currentScreen = 'setup';
+        }
+
+        // Show toss screen
+        function showTossScreen() {
+            setupScreen.classList.add('d-none');
+            tossScreen.classList.remove('d-none');
+            currentScreen = 'toss';
+            
+            // Update team names
+            const team1Name = document.getElementById('team1Name').value || 'Team 1';
+            const team2Name = document.getElementById('team2Name').value || 'Team 2';
+            document.getElementById('team1NameToss').textContent = team1Name;
+            document.getElementById('team2NameToss').textContent = team2Name;
+            
+            // Populate captain dropdowns
+            populateCaptainDropdowns();
+        }
+
+        // Populate captain dropdowns
+        function populateCaptainDropdowns() {
+            const team1PlayersText = document.getElementById('team1Players').value;
+            const team2PlayersText = document.getElementById('team2Players').value;
+            
+            const team1Players = team1PlayersText ? team1PlayersText.split('\n').filter(p => p.trim()) : ['Player 1', 'Player 2'];
+            const team2Players = team2PlayersText ? team2PlayersText.split('\n').filter(p => p.trim()) : ['Player 1', 'Player 2'];
+            
+            const team1CaptainSelect = document.getElementById('team1Captain');
+            const team2CaptainSelect = document.getElementById('team2Captain');
+            
+            team1CaptainSelect.innerHTML = '<option value="">Select Captain</option>';
+            team2CaptainSelect.innerHTML = '<option value="">Select Captain</option>';
+            
+            team1Players.forEach(player => {
+                const option = document.createElement('option');
+                option.value = player;
+                option.textContent = player;
+                team1CaptainSelect.appendChild(option);
+            });
+            
+            team2Players.forEach(player => {
+                const option = document.createElement('option');
+                option.value = player;
+                option.textContent = player;
+                team2CaptainSelect.appendChild(option);
+            });
+        }
+
+        // Select toss choice
+        function selectTossChoice(team, choice) {
+            // Reset buttons
+            document.querySelectorAll('#tossScreen .btn-outline-primary').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Set active button
+            const btn = document.getElementById(`${team}${choice.charAt(0).toUpperCase() + choice.slice(1)}`);
+            btn.classList.add('active');
+        }
+
+        // Flip coin
+        function flipCoin() {
+            const coin = document.getElementById('tossCoin');
+            coin.classList.add('flipping');
+            
+            setTimeout(() => {
+                coin.classList.remove('flipping');
+                const result = Math.random() > 0.5 ? 'heads' : 'tails';
+                document.getElementById('tossResultText').textContent = result.toUpperCase();
+                document.getElementById('tossWinnerText').textContent = `Congratulations to the winner!`;
+                document.getElementById('tossResult').style.display = 'block';
+                
+                // Store result
+                matchData.toss.result = result;
+            }, 1000);
+        }
+
+        // Use toss result
+        function useTossResult() {
+            const team1Choice = document.querySelector('#team1Heads.active') ? 'heads' : 
+                              document.querySelector('#team1Tails.active') ? 'tails' : '';
+            const team2Choice = document.querySelector('#team2Heads.active') ? 'heads' : 
+                              document.querySelector('#team2Tails.active') ? 'tails' : '';
+            
+            if (!team1Choice || !team2Choice) {
+                alert('Please select choices for both teams');
+                return;
+            }
+            
+            const winner = matchData.toss.result === team1Choice ? 'team1' : 'team2';
+            const team1Name = document.getElementById('team1Name').value || 'Team 1';
+            const team2Name = document.getElementById('team2Name').value || 'Team 2';
+            const winnerName = winner === 'team1' ? team1Name : team2Name;
+            
+            // Set toss winner in setup form
+            document.getElementById('tossWinner').value = winner;
+            
+            // Add commentary
+            addCommentaryItem(`${winnerName} won the toss and elected to bat first.`);
+            
+            // Go to scoring screen
+            tossScreen.classList.add('d-none');
+            scoringScreen.classList.remove('d-none');
+            currentScreen = 'scoring';
         }
 
         // Start scoring
@@ -976,6 +1513,74 @@
             });
         }
 
+        // Join match (view only)
+        function joinMatch() {
+            const code = document.getElementById('matchCodeInput').value.toUpperCase();
+            
+            if (code === matchData.code) {
+                // Switch to viewer screen
+                welcomeScreen.classList.add('d-none');
+                viewerScreen.classList.remove('d-none');
+                currentScreen = 'viewer';
+                
+                // Update viewer display
+                document.getElementById('viewerMatchCode').textContent = code;
+                updateViewerDisplay();
+                
+                // Close modal
+                const modal = bootstrap.Modal.getInstance(document.getElementById('viewMatchModal'));
+                modal.hide();
+            } else {
+                alert('Invalid match code. Please try again.');
+            }
+        }
+
+        // Update viewer display
+        function updateViewerDisplay() {
+            const battingTeam = matchData.currentInnings === 1 ? matchData.team1 : matchData.team2;
+            
+            // Update main score display
+            document.getElementById('viewerCurrentScore').textContent = `${battingTeam.score}/${battingTeam.wickets}`;
+            
+            // Update overs display
+            document.getElementById('viewerOversDisplay').textContent = `${battingTeam.overs}.${battingTeam.balls}`;
+            
+            // Update progress bar
+            const totalOvers = parseInt(document.getElementById('overs').value) || 20;
+            const progress = ((battingTeam.overs * 6 + battingTeam.balls) / (totalOvers * 6)) * 100;
+            document.getElementById('viewerOversProgressBar').style.width = `${Math.min(progress, 100)}%`;
+            document.getElementById('viewerOversProgressText').textContent = `${battingTeam.overs}.${battingTeam.balls}/${totalOvers}`;
+            
+            // Update current batsmen
+            document.getElementById('viewerCurrentBatsmen').textContent = 
+                `Batsmen: ${matchData.currentBatsmen[0]}* / ${matchData.currentBatsmen[1]}`;
+            
+            // Update players display
+            document.getElementById('viewerCurrentBatsmenList').innerHTML = 
+                `${matchData.currentBatsmen[0]}*<br>${matchData.currentBatsmen[1]}`;
+            document.getElementById('viewerCurrentBowler').textContent = matchData.currentBowler;
+            
+            // Update ball display
+            const viewerBallDisplay = document.getElementById('viewerBallDisplay');
+            viewerBallDisplay.innerHTML = '';
+            matchData.balls.forEach(ball => {
+                const ballElement = document.createElement('div');
+                ballElement.className = `ball ${ball.type}`;
+                ballElement.textContent = ball.content;
+                viewerBallDisplay.appendChild(ballElement);
+            });
+            
+            // Update commentary
+            const viewerCommentaryBox = document.getElementById('viewerCommentaryBox');
+            viewerCommentaryBox.innerHTML = '';
+            matchData.commentary.forEach(item => {
+                const commentaryItem = document.createElement('div');
+                commentaryItem.className = 'commentary-item';
+                commentaryItem.innerHTML = `<strong>[${item.time}]</strong> ${item.text}`;
+                viewerCommentaryBox.appendChild(commentaryItem);
+            });
+        }
+
         // Add runs to score
         function addRuns(runs) {
             const battingTeam = matchData.currentInnings === 1 ? matchData.team1 : matchData.team2;
@@ -991,12 +1596,18 @@
             // Add ball to display
             addBallToDisplay(runs, 'normal');
             
+            // Add to match data
+            matchData.balls.push({ content: runs, type: 'normal' });
+            
             // Add commentary
             const commentaryText = generateRunCommentary(runs);
             addCommentaryItem(commentaryText);
             
-            // Update display
+            // Update displays
             updateScoreDisplay();
+            if (currentScreen === 'viewer') {
+                updateViewerDisplay();
+            }
         }
 
         // Add extra to score
@@ -1032,8 +1643,17 @@
             // Add ball to display
             addBallToDisplay(extraType === 'wide' ? 'W' : 'B', extraType);
             
-            // Update display
+            // Add to match data
+            matchData.balls.push({ 
+                content: extraType === 'wide' ? 'W' : 'B', 
+                type: extraType 
+            });
+            
+            // Update displays
             updateScoreDisplay();
+            if (currentScreen === 'viewer') {
+                updateViewerDisplay();
+            }
         }
 
         // Confirm no ball details
@@ -1070,12 +1690,52 @@
             // Add ball to display
             addBallToDisplay('NB', 'noball');
             
+            // Add to match data
+            matchData.balls.push({ content: 'NB', type: 'noball' });
+            
             // Close modal
             const modal = bootstrap.Modal.getInstance(document.getElementById('noBallModal'));
             modal.hide();
             
-            // Update display
+            // Update displays
             updateScoreDisplay();
+            if (currentScreen === 'viewer') {
+                updateViewerDisplay();
+            }
+        }
+
+        // Show drop catch options
+        function showDropCatch(show) {
+            document.getElementById('dropCatchSection').style.display = show ? 'block' : 'none';
+        }
+
+        // Confirm catch details
+        function confirmCatch(type) {
+            const fielderName = document.getElementById('fielderName').value || 'Fielder';
+            
+            let commentaryText = '';
+            switch(type) {
+                case 'fantastic':
+                    commentaryText = `WHAT A CATCH! ${fielderName} putting his body on the line to take an incredible catch!`;
+                    break;
+                case 'easy':
+                    commentaryText = `DROP CATCH! ${fielderName} dropped an easy catch. Can this drop cost them the match?`;
+                    break;
+                case 'tough':
+                    commentaryText = `TOUGH LUCK! ${fielderName} made his ground but couldn't hold the ball. What an effort though!`;
+                    break;
+                default:
+                    commentaryText = `${fielderName} takes a good catch!`;
+            }
+            
+            addCommentaryItem(commentaryText);
+            
+            // Add wicket
+            addWicket('caught');
+            
+            // Close modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById('catchModal'));
+            modal.hide();
         }
 
         // Add wicket
@@ -1107,12 +1767,82 @@
             // Add ball to display
             addBallToDisplay('W', 'wicket');
             
+            // Add to match data
+            matchData.balls.push({ content: 'W', type: 'wicket' });
+            
             // Add commentary
             const commentaryText = generateWicketCommentary(wicketType, wicketInfo.batsman);
             addCommentaryItem(commentaryText);
             
-            // Update display
+            // Update displays
             updateScoreDisplay();
+            if (currentScreen === 'viewer') {
+                updateViewerDisplay();
+            }
+        }
+
+        // Show pitch map
+        function showPitchMap() {
+            const pitchMap = document.getElementById('pitchMap');
+            
+            // Clear existing markers
+            document.querySelectorAll('.pitch-marker').forEach(marker => marker.remove());
+            
+            // Add click event to pitch map
+            pitchMap.addEventListener('click', function(e) {
+                const rect = pitchMap.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                // Create marker
+                const marker = document.createElement('div');
+                marker.className = 'pitch-marker';
+                marker.style.left = `${x}px`;
+                marker.style.top = `${y}px`;
+                pitchMap.appendChild(marker);
+                
+                // Store marker position
+                matchData.pitchMarkers.push({ x, y });
+                
+                // Add commentary
+                addCommentaryItem("Ball pitched on middle stump, good length delivery.");
+            }, { once: true });
+            
+            alert('Click on the pitch to mark where the ball pitched');
+        }
+
+        // Show ground map
+        function showGroundMap() {
+            const groundMap = document.getElementById('groundMap');
+            
+            // Add click event to ground map
+            groundMap.addEventListener('click', function(e) {
+                const rect = groundMap.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                // Create marker
+                const marker = document.createElement('div');
+                marker.className = 'six-point';
+                marker.style.left = `${x}px`;
+                marker.style.top = `${y}px`;
+                groundMap.appendChild(marker);
+                
+                // Store marker position
+                matchData.groundMarkers.push({ x, y });
+                
+                // Add commentary based on position
+                const distance = Math.sqrt(Math.pow(x - 150, 2) + Math.pow(y - 150, 2));
+                if (distance > 120) {
+                    addCommentaryItem("Six! The ball sailed over the boundary rope!");
+                } else if (distance > 80) {
+                    addCommentaryItem("Four! Cleanly hit through the covers!");
+                } else {
+                    addCommentaryItem("Well played shot into the gap.");
+                }
+            }, { once: true });
+            
+            alert('Click on the ground to mark where the ball went');
         }
 
         // Add ball to display
@@ -1235,6 +1965,11 @@
             if (text) {
                 addCommentaryItem(text);
                 input.value = '';
+                
+                // Update viewer if needed
+                if (currentScreen === 'viewer') {
+                    updateViewerDisplay();
+                }
             }
         }
 
@@ -1362,6 +2097,11 @@
             showScreen('setup');
         });
 
+        document.getElementById('tossLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            showTossScreen();
+        });
+
         document.getElementById('viewMatchLink').addEventListener('click', function(e) {
             e.preventDefault();
             const modal = new bootstrap.Modal(document.getElementById('viewMatchModal'));
@@ -1371,8 +2111,10 @@
         function showScreen(screen) {
             welcomeScreen.classList.add('d-none');
             setupScreen.classList.add('d-none');
+            tossScreen.classList.add('d-none');
             scoringScreen.classList.add('d-none');
             summaryScreen.classList.add('d-none');
+            viewerScreen.classList.add('d-none');
             
             switch(screen) {
                 case 'welcome':
@@ -1381,11 +2123,17 @@
                 case 'setup':
                     setupScreen.classList.remove('d-none');
                     break;
+                case 'toss':
+                    tossScreen.classList.remove('d-none');
+                    break;
                 case 'scoring':
                     scoringScreen.classList.remove('d-none');
                     break;
                 case 'summary':
                     summaryScreen.classList.remove('d-none');
+                    break;
+                case 'viewer':
+                    viewerScreen.classList.remove('d-none');
                     break;
             }
             
