@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,60 +19,56 @@
         }
         
         body {
-            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
-            color: var(--light-color);
+            background: #f8f9fa;
+            color: #333;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             min-height: 100vh;
             padding-bottom: 2rem;
         }
         
         .navbar {
-            background: rgba(44, 62, 80, 0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            background: #2c3e50;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
         
         .card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 15px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
             margin-bottom: 1.5rem;
-            transition: transform 0.3s ease;
-        }
-        
-        .card:hover {
-            transform: translateY(-5px);
         }
         
         .card-header {
-            background: rgba(52, 152, 219, 0.2);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            background: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
             font-weight: 600;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
         }
         
         .btn-primary {
-            background: linear-gradient(45deg, #3498db, #2980b9);
+            background: #3498db;
             border: none;
             padding: 10px 20px;
             font-weight: 600;
-            transition: all 0.3s ease;
         }
         
         .btn-primary:hover {
-            background: linear-gradient(45deg, #2980b9, #3498db);
-            transform: scale(1.05);
+            background: #2980b9;
         }
         
         .btn-success {
-            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            background: #27ae60;
             border: none;
         }
         
         .btn-danger {
-            background: linear-gradient(45deg, #c0392b, #e74c3c);
+            background: #e74c3c;
+            border: none;
+        }
+        
+        .btn-warning {
+            background: #f39c12;
             border: none;
         }
         
@@ -79,11 +76,11 @@
             font-size: 3rem;
             font-weight: 700;
             text-align: center;
-            background: rgba(0, 0, 0, 0.3);
+            background: #f8f9fa;
             border-radius: 10px;
             padding: 1rem;
             margin: 1rem 0;
-            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5);
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
         }
         
         .ball-display {
@@ -105,36 +102,31 @@
             font-size: 0.8rem;
         }
         
-        .ball.normal { background: #27ae60; }
-        .ball.wide { background: #f39c12; }
-        .ball.noball { background: #e67e22; }
-        .ball.wicket { background: #e74c3c; }
-        .ball.bye { background: #9b59b6; }
-        .ball.legbye { background: #8e44ad; }
-        .ball.overthrow { background: #1abc9c; }
-        
-        .player-card {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            padding: 1rem;
-            margin-bottom: 1rem;
-        }
+        .ball.normal { background: #27ae60; color: white; }
+        .ball.wide { background: #f39c12; color: white; }
+        .ball.noball { background: #e67e22; color: white; }
+        .ball.wicket { background: #e74c3c; color: white; }
+        .ball.bye { background: #9b59b6; color: white; }
+        .ball.legbye { background: #8e44ad; color: white; }
+        .ball.overthrow { background: #1abc9c; color: white; }
         
         .match-code {
             font-family: 'Courier New', monospace;
             font-size: 1.5rem;
             letter-spacing: 3px;
-            background: rgba(0, 0, 0, 0.3);
+            background: #f8f9fa;
             padding: 0.5rem 1rem;
             border-radius: 8px;
             display: inline-block;
+            border: 1px solid #ddd;
         }
         
         .overs-progress {
             height: 20px;
-            background: rgba(0, 0, 0, 0.3);
+            background: #f8f9fa;
             border-radius: 10px;
             overflow: hidden;
+            border: 1px solid #ddd;
         }
         
         .overs-progress-bar {
@@ -144,15 +136,10 @@
         }
         
         .section-title {
-            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+            border-bottom: 2px solid #3498db;
             padding-bottom: 0.5rem;
             margin-bottom: 1.5rem;
-            color: #3498db;
-        }
-        
-        .tournament-card {
-            background: rgba(46, 204, 113, 0.15);
-            border: 1px solid rgba(46, 204, 113, 0.3);
+            color: #2c3e50;
         }
         
         .live-indicator {
@@ -173,7 +160,7 @@
         
         .action-btn {
             margin: 5px;
-            min-width: 120px;
+            min-width: 100px;
         }
         
         .wicket-types {
@@ -184,54 +171,20 @@
         
         .wicket-btn {
             flex: 1;
-            min-width: 120px;
-        }
-        
-        .toss-winner {
-            font-weight: bold;
-            color: #f1c40f;
-        }
-        
-        .dls-adjusted {
-            background: rgba(231, 76, 60, 0.2);
-            border: 1px solid rgba(231, 76, 60, 0.5);
-        }
-        
-        .footer {
-            text-align: center;
-            margin-top: 2rem;
-            padding-top: 1rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.7);
-        }
-        
-        .commentary-box {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            padding: 1rem;
-            margin-top: 1rem;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-        
-        .commentary-item {
-            margin-bottom: 0.5rem;
-            padding: 0.5rem;
-            border-left: 3px solid #3498db;
-            background: rgba(255, 255, 255, 0.05);
+            min-width: 100px;
         }
         
         .modal-content {
-            background: #2c3e50;
-            color: white;
+            background: white;
+            color: #333;
         }
         
         .modal-header {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            border-bottom: 1px solid #e0e0e0;
         }
         
         .modal-footer {
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            border-top: 1px solid #e0e0e0;
         }
         
         .coin {
@@ -244,22 +197,16 @@
             cursor: pointer;
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
             transition: transform 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #b8860b;
         }
         
         .coin:hover {
             transform: scale(1.05);
-        }
-        
-        .coin::before {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80%;
-            height: 80%;
-            border: 3px solid #b8860b;
-            border-radius: 50%;
         }
         
         .coin.flipping {
@@ -271,11 +218,25 @@
             100% { transform: rotateY(1800deg); }
         }
         
+        .coin-front, .coin-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backface-visibility: hidden;
+        }
+        
+        .coin-back {
+            transform: rotateY(180deg);
+        }
+        
         .pitch-map {
             width: 100%;
             height: 300px;
             background: linear-gradient(180deg, #2ecc71 0%, #27ae60 100%);
-            border: 2px solid #fff;
+            border: 2px solid #333;
             border-radius: 10px;
             position: relative;
             cursor: pointer;
@@ -333,7 +294,7 @@
             width: 100%;
             height: 300px;
             background: radial-gradient(circle, #27ae60 0%, #2ecc71 70%, #1abc9c 100%);
-            border: 2px solid #fff;
+            border: 2px solid #333;
             border-radius: 50%;
             position: relative;
             cursor: pointer;
@@ -347,45 +308,47 @@
             left: 10px;
             right: 10px;
             bottom: 10px;
-            border: 2px dashed rgba(255,255,255,0.5);
+            border: 2px dashed rgba(255,255,255,0.7);
             border-radius: 50%;
         }
         
-        .six-point {
+        .ground-marker {
             position: absolute;
-            width: 20px;
-            height: 20px;
-            background: #3498db;
+            width: 15px;
+            height: 15px;
+            background: blue;
             border-radius: 50%;
             transform: translate(-50%, -50%);
             cursor: pointer;
+            z-index: 10;
         }
         
-        .fielder-position {
-            position: absolute;
-            width: 25px;
-            height: 25px;
-            background: #e74c3c;
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: bold;
+        .commentary-box {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 1rem;
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+        }
+        
+        .commentary-item {
+            margin-bottom: 0.5rem;
+            padding: 0.5rem;
+            border-left: 3px solid #3498db;
+            background: white;
+        }
+        
+        .disabled-btn {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .btn-outline-primary.active {
+            background-color: #3498db;
             color: white;
         }
-        
-        .fielder-position.cover { top: 20%; left: 50%; }
-        .fielder-position.mid-off { top: 30%; left: 35%; }
-        .fielder-position.mid-on { top: 30%; left: 65%; }
-        .fielder-position.square-leg { top: 60%; left: 75%; }
-        .fielder-position.fine-leg { top: 75%; left: 85%; }
-        .fielder-position.third-man { top: 25%; left: 85%; }
-        .fielder-position.gully { top: 25%; left: 25%; }
-        .fielder-position.slip { top: 20%; left: 35%; }
-        .fielder-position.point { top: 20%; left: 65%; }
-        .fielder-position.third-cover { top: 20%; left: 75%; }
     </style>
 </head>
 <body>
@@ -407,10 +370,10 @@
                         <a class="nav-link" href="#" id="newMatchLink"><i class="fas fa-plus-circle"></i> New Match</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" id="tossLink"><i class="fas fa-coins"></i> Toss</a>
+                        <a class="nav-link" href="#" id="tossLink" data-bs-toggle="modal" data-bs-target="#tossModal"><i class="fas fa-coins"></i> Toss</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" id="viewMatchLink"><i class="fas fa-eye"></i> View Match</a>
+                        <a class="nav-link" href="#" id="viewMatchLink" data-bs-toggle="modal" data-bs-target="#viewMatchModal"><i class="fas fa-eye"></i> View Match</a>
                     </li>
                 </ul>
             </div>
@@ -499,7 +462,7 @@
                                 </div>
                                 
                                 <div class="mb-3">
-                                    <label class="form-label">Toss</label>
+                                    <label class="form-label">Toss Result</label>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <select class="form-select" id="tossWinner">
@@ -545,18 +508,14 @@
                                                 <label class="form-check-label" for="legByeRule">Leg Bye</label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="overThrowRule" checked>
-                                                <label class="form-check-label" for="overThrowRule">Over Throw</label>
+                                                <input class="form-check-input" type="checkbox" id="lbwRule" checked>
+                                                <label class="form-check-label" for="lbwRule">LBW</label>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" id="mankadingRule" checked>
                                                 <label class="form-check-label" for="mankadingRule">Mankading</label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="lbwRule" checked>
-                                                <label class="form-check-label" for="lbwRule">LBW</label>
                                             </div>
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" id="dlsRule" checked>
@@ -596,83 +555,13 @@
             </div>
         </div>
 
-        <!-- Toss Screen -->
-        <div id="tossScreen" class="d-none">
-            <h2 class="section-title">Coin Toss</h2>
-            
-            <div class="row justify-content-center">
-                <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-header text-center">
-                            <i class="fas fa-coins"></i> Toss Ceremony
-                        </div>
-                        <div class="card-body text-center">
-                            <h4 class="mb-4">Captain Selection</h4>
-                            
-                            <div class="row mb-4">
-                                <div class="col-md-6">
-                                    <h5 id="team1NameToss">Team 1</h5>
-                                    <div class="mb-3">
-                                        <select class="form-select" id="team1Captain">
-                                            <option value="">Select Captain</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">Choose:</label>
-                                        <div>
-                                            <button class="btn btn-outline-primary me-2" id="team1Heads">Heads</button>
-                                            <button class="btn btn-outline-primary" id="team1Tails">Tails</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <h5 id="team2NameToss">Team 2</h5>
-                                    <div class="mb-3">
-                                        <select class="form-select" id="team2Captain">
-                                            <option value="">Select Captain</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">Choose:</label>
-                                        <div>
-                                            <button class="btn btn-outline-primary me-2" id="team2Heads">Heads</button>
-                                            <button class="btn btn-outline-primary" id="team2Tails">Tails</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="coin" id="tossCoin">
-                                <div class="coin-inner">
-                                    <div class="coin-front">H</div>
-                                    <div class="coin-back">T</div>
-                                </div>
-                            </div>
-                            
-                            <button class="btn btn-primary btn-lg mb-3" id="flipCoinBtn">
-                                <i class="fas fa-sync"></i> Flip Coin
-                            </button>
-                            
-                            <div class="result-display mt-3" id="tossResult" style="display: none;">
-                                <h3 class="text-success">Result: <span id="tossResultText"></span></h3>
-                                <p id="tossWinnerText"></p>
-                                <button class="btn btn-success" id="useTossResultBtn">
-                                    <i class="fas fa-check"></i> Use This Result
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- Scoring Screen -->
         <div id="scoringScreen" class="d-none">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h2 class="section-title mb-0">Live Scoring</h2>
                 <div class="match-code-container">
-                    <span class="match-code" id="matchCodeDisplay">ABC123</span>
-                    <button class="btn btn-sm btn-outline-light ms-2" id="copyCodeBtn">
+                    <span class="match-code" id="matchCodeDisplay">123456</span>
+                    <button class="btn btn-sm btn-outline-primary ms-2" id="copyCodeBtn">
                         <i class="fas fa-copy"></i> Copy Code
                     </button>
                 </div>
@@ -705,6 +594,7 @@
                                     <button class="btn btn-success action-btn" data-score="2">2 Runs</button>
                                     <button class="btn btn-success action-btn" data-score="3">3 Runs</button>
                                     <button class="btn btn-success action-btn" data-score="4">4 Runs</button>
+                                    <button class="btn btn-success action-btn" data-score="5">5 Runs</button>
                                     <button class="btn btn-success action-btn" data-score="6">6 Runs</button>
                                 </div>
                                 
@@ -715,7 +605,6 @@
                                         <button class="btn btn-warning action-btn" data-extra="noball">No Ball</button>
                                         <button class="btn btn-warning action-btn" data-extra="bye">Bye</button>
                                         <button class="btn btn-warning action-btn" data-extra="legbye">Leg Bye</button>
-                                        <button class="btn btn-warning action-btn" data-extra="overthrow">Over Throw</button>
                                     </div>
                                 </div>
                                 
@@ -724,58 +613,11 @@
                                     <div class="wicket-types">
                                         <button class="btn btn-danger wicket-btn" data-wicket="bowled">Bowled</button>
                                         <button class="btn btn-danger wicket-btn" data-wicket="caught">Caught</button>
-                                        <button class="btn btn-danger wicket-btn" data-wicket="lbw">LBW</button>
+                                        <button class="btn btn-danger wicket-btn" data-wicket="lbw" id="lbwBtn">LBW</button>
                                         <button class="btn btn-danger wicket-btn" data-wicket="stumping">Stumping</button>
                                         <button class="btn btn-danger wicket-btn" data-wicket="runout">Run Out</button>
                                         <button class="btn btn-danger wicket-btn" data-wicket="mankading">Mankading</button>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Ball Tracking Section -->
-                    <div class="card mt-4">
-                        <div class="card-header">
-                            <i class="fas fa-baseball-ball"></i> Ball Tracking
-                        </div>
-                        <div class="card-body">
-                            <ul class="nav nav-tabs" id="ballTrackingTabs" role="tablist">
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link active" id="pitch-tab" data-bs-toggle="tab" data-bs-target="#pitch" type="button" role="tab">Pitch Map</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="ground-tab" data-bs-toggle="tab" data-bs-target="#ground" type="button" role="tab">Ground Map</button>
-                                </li>
-                            </ul>
-                            <div class="tab-content mt-3" id="ballTrackingContent">
-                                <div class="tab-pane fade show active" id="pitch" role="tabpanel">
-                                    <p>Click on the pitch to mark where the ball pitched:</p>
-                                    <div class="pitch-map" id="pitchMap">
-                                        <div class="pitch-lines"></div>
-                                        <div class="wicket left"></div>
-                                        <div class="wicket right"></div>
-                                        <div class="crease left"></div>
-                                        <div class="crease right"></div>
-                                    </div>
-                                    <button class="btn btn-primary" id="pitchBallBtn">Pitch Ball</button>
-                                </div>
-                                <div class="tab-pane fade" id="ground" role="tabpanel">
-                                    <p>Click on the ground to mark where the ball went:</p>
-                                    <div class="ground-map" id="groundMap">
-                                        <div class="boundary"></div>
-                                        <div class="fielder-position cover">CO</div>
-                                        <div class="fielder-position mid-off">MO</div>
-                                        <div class="fielder-position mid-on">MI</div>
-                                        <div class="fielder-position square-leg">SL</div>
-                                        <div class="fielder-position fine-leg">FL</div>
-                                        <div class="fielder-position third-man">TM</div>
-                                        <div class="fielder-position gully">GU</div>
-                                        <div class="fielder-position slip">SL</div>
-                                        <div class="fielder-position point">PO</div>
-                                        <div class="fielder-position third-cover">TC</div>
-                                    </div>
-                                    <button class="btn btn-primary" id="groundBallBtn">Ground Ball</button>
                                 </div>
                             </div>
                         </div>
@@ -836,13 +678,6 @@
                                 <div class="d-flex justify-content-between">
                                     <span>Current Partnership</span>
                                     <span id="partnership">0 (0.0 overs)</span>
-                                </div>
-                            </div>
-                            
-                            <div class="mb-3">
-                                <div class="d-flex justify-content-between">
-                                    <span>Last 5 Overs</span>
-                                    <span id="last5Overs">0 runs</span>
                                 </div>
                             </div>
                         </div>
@@ -954,21 +789,6 @@
                             </button>
                         </div>
                     </div>
-                    
-                    <div class="card">
-                        <div class="card-header">
-                            <i class="fas fa-history"></i> Match History
-                        </div>
-                        <div class="card-body">
-                            <p>This was match 1 of 3 in the tournament</p>
-                            <div class="progress mb-3">
-                                <div class="progress-bar" role="progressbar" style="width: 33%">33%</div>
-                            </div>
-                            <button class="btn btn-primary w-100" id="nextMatchBtn">
-                                <i class="fas fa-arrow-right"></i> Next Match
-                            </button>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -978,7 +798,7 @@
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h2 class="section-title mb-0">Live Match Viewer</h2>
                 <div class="match-code-container">
-                    <span class="match-code" id="viewerMatchCode">ABC123</span>
+                    <span class="match-code" id="viewerMatchCode">123456</span>
                 </div>
             </div>
             
@@ -1070,18 +890,66 @@
         </div>
     </div>
 
+    <!-- Toss Modal -->
+    <div class="modal fade" id="tossModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Coin Toss</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <h4 class="mb-4">Toss Ceremony</h4>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Who's picking?</label>
+                        <div>
+                            <button class="btn btn-outline-primary me-2" id="homeTeamBtn">Home Team</button>
+                            <button class="btn btn-outline-primary" id="awayTeamBtn">Away Team</button>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Choose:</label>
+                        <div>
+                            <button class="btn btn-outline-primary me-2" id="headsBtn">Heads</button>
+                            <button class="btn btn-outline-primary" id="tailsBtn">Tails</button>
+                        </div>
+                    </div>
+                    
+                    <div class="coin" id="tossCoin">
+                        <div class="coin-front" id="coinFront" style="display: none;">H</div>
+                        <div class="coin-back" id="coinBack" style="display: none;">T</div>
+                    </div>
+                    
+                    <button class="btn btn-primary btn-lg mb-3" id="flipCoinBtn">
+                        <i class="fas fa-sync"></i> Flip Coin
+                    </button>
+                    
+                    <div class="result-display mt-3" id="tossResult" style="display: none;">
+                        <h3 class="text-success">Result: <span id="tossResultText"></span></h3>
+                        <p id="tossWinnerText"></p>
+                        <button class="btn btn-success" id="useTossResultBtn">
+                            <i class="fas fa-check"></i> Use This Result
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- View Match Modal -->
     <div class="modal fade" id="viewMatchModal" tabindex="-1">
         <div class="modal-dialog">
-            <div class="modal-content bg-dark text-light">
+            <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">View Live Match</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="matchCodeInput" class="form-label">Enter Match Code</label>
-                        <input type="text" class="form-control" id="matchCodeInput" placeholder="Enter 6-character code">
+                        <input type="text" class="form-control" id="matchCodeInput" placeholder="Enter 6-digit code">
                     </div>
                     <div class="d-grid">
                         <button class="btn btn-success" id="joinMatchBtn">
@@ -1096,10 +964,10 @@
     <!-- No Ball Details Modal -->
     <div class="modal fade" id="noBallModal" tabindex="-1">
         <div class="modal-dialog">
-            <div class="modal-content bg-dark text-light">
+            <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">No Ball Details</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
@@ -1129,37 +997,77 @@
         </div>
     </div>
 
-    <!-- Catch Details Modal -->
-    <div class="modal fade" id="catchModal" tabindex="-1">
+    <!-- Fielder Selection Modal -->
+    <div class="modal fade" id="fielderModal" tabindex="-1">
         <div class="modal-dialog">
-            <div class="modal-content bg-dark text-light">
+            <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Catch Details</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    <h5 class="modal-title">Select Fielder</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label class="form-label">Fielder Name</label>
-                        <input type="text" class="form-control" id="fielderName" placeholder="Enter fielder name">
+                        <label class="form-label">Fielding Team Players</label>
+                        <div id="fielderList">
+                            <!-- Fielders will be populated here -->
+                        </div>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Was it a fantastic catch?</label>
-                        <div>
-                            <button class="btn btn-success me-2" id="fantasticCatchBtn">Yes</button>
-                            <button class="btn btn-warning" id="normalCatchBtn">No</button>
-                        </div>
+                        <label for="customFielder" class="form-label">Or enter fielder name manually</label>
+                        <input type="text" class="form-control" id="customFielder" placeholder="Enter fielder name">
                     </div>
-                    <div class="mb-3" id="dropCatchSection" style="display: none;">
-                        <label class="form-label">Drop Catch Type</label>
-                        <div>
-                            <button class="btn btn-danger me-2" id="easyDropBtn">Easy Catch</button>
-                            <button class="btn btn-warning" id="toughDropBtn">Tough Catch</button>
-                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Skip</button>
+                    <button type="button" class="btn btn-primary" id="confirmFielderBtn">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pitch Tracking Modal -->
+    <div class="modal fade" id="pitchModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Pitch Tracking</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Click on the pitch to mark where the ball pitched:</p>
+                    <div class="pitch-map" id="pitchMapModal">
+                        <div class="pitch-lines"></div>
+                        <div class="wicket left"></div>
+                        <div class="wicket right"></div>
+                        <div class="crease left"></div>
+                        <div class="crease right"></div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" id="confirmCatchBtn">Confirm</button>
+                    <button type="button" class="btn btn-primary" id="savePitchBtn">Save & Continue</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ground Tracking Modal -->
+    <div class="modal fade" id="groundModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Ground Tracking</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Click on the ground to mark where the ball went:</p>
+                    <div class="ground-map" id="groundMapModal">
+                        <div class="boundary"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="saveGroundBtn">Save</button>
                 </div>
             </div>
         </div>
@@ -1168,10 +1076,10 @@
     <!-- Export Report Modal -->
     <div class="modal fade" id="exportModal" tabindex="-1">
         <div class="modal-dialog">
-            <div class="modal-content bg-dark text-light">
+            <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Export Match Report</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <p>Choose the format for your match report:</p>
@@ -1191,10 +1099,10 @@
     <!-- Share Scorecard Modal -->
     <div class="modal fade" id="shareScorecardModal" tabindex="-1">
         <div class="modal-dialog modal-lg">
-            <div class="modal-content bg-dark text-light">
+            <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Share Scorecard</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <div class="text-center mb-3">
@@ -1216,11 +1124,6 @@
         </div>
     </div>
 
-    <!-- Footer -->
-    <div class="container footer">
-        <p>&copy; 2023 Gully Cricket Score Tracker | Made for cricket lovers</p>
-    </div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // Global variables
@@ -1234,20 +1137,20 @@
             playersTeam1: [],
             playersTeam2: [],
             rules: {},
-            toss: { winner: '', decision: '' },
+            toss: { winner: '', decision: '', result: '' },
             target: 0,
             currentBatsmen: [],
             currentBowler: null,
             recentWickets: [],
             commentary: [],
             pitchMarkers: [],
-            groundMarkers: []
+            groundMarkers: [],
+            pendingAction: null // For tracking what action to take after ball tracking
         };
 
         // DOM Elements
         const welcomeScreen = document.getElementById('welcomeScreen');
         const setupScreen = document.getElementById('setupScreen');
-        const tossScreen = document.getElementById('tossScreen');
         const scoringScreen = document.getElementById('scoringScreen');
         const summaryScreen = document.getElementById('summaryScreen');
         const viewerScreen = document.getElementById('viewerScreen');
@@ -1273,23 +1176,17 @@
             document.getElementById('addCommentaryBtn').addEventListener('click', addCommentary);
             document.getElementById('confirmNoBallBtn').addEventListener('click', confirmNoBall);
             document.getElementById('joinMatchBtn').addEventListener('click', joinMatch);
-            document.getElementById('pitchBallBtn').addEventListener('click', showPitchMap);
-            document.getElementById('groundBallBtn').addEventListener('click', showGroundMap);
+            document.getElementById('savePitchBtn').addEventListener('click', savePitchTracking);
+            document.getElementById('saveGroundBtn').addEventListener('click', saveGroundTracking);
+            document.getElementById('confirmFielderBtn').addEventListener('click', confirmFielder);
             
             // Toss events
             document.getElementById('flipCoinBtn').addEventListener('click', flipCoin);
             document.getElementById('useTossResultBtn').addEventListener('click', useTossResult);
-            document.getElementById('team1Heads').addEventListener('click', () => selectTossChoice('team1', 'heads'));
-            document.getElementById('team1Tails').addEventListener('click', () => selectTossChoice('team1', 'tails'));
-            document.getElementById('team2Heads').addEventListener('click', () => selectTossChoice('team2', 'heads'));
-            document.getElementById('team2Tails').addEventListener('click', () => selectTossChoice('team2', 'tails'));
-            
-            // Catch modal events
-            document.getElementById('fantasticCatchBtn').addEventListener('click', () => showDropCatch(false));
-            document.getElementById('normalCatchBtn').addEventListener('click', () => showDropCatch(true));
-            document.getElementById('easyDropBtn').addEventListener('click', () => confirmCatch('easy'));
-            document.getElementById('toughDropBtn').addEventListener('click', () => confirmCatch('tough'));
-            document.getElementById('confirmCatchBtn').addEventListener('click', () => confirmCatch('normal'));
+            document.getElementById('homeTeamBtn').addEventListener('click', () => selectTeam('home'));
+            document.getElementById('awayTeamBtn').addEventListener('click', () => selectTeam('away'));
+            document.getElementById('headsBtn').addEventListener('click', () => selectChoice('heads'));
+            document.getElementById('tailsBtn').addEventListener('click', () => selectChoice('tails'));
             
             // No ball type change
             document.getElementById('noBallType').addEventListener('change', function() {
@@ -1315,13 +1212,29 @@
             
             document.querySelectorAll('[data-wicket]').forEach(btn => {
                 btn.addEventListener('click', () => {
-                    if (btn.dataset.wicket === 'caught') {
-                        const modal = new bootstrap.Modal(document.getElementById('catchModal'));
+                    if (btn.dataset.wicket === 'caught' || btn.dataset.wicket === 'runout') {
+                        matchData.pendingAction = { type: 'wicket', wicketType: btn.dataset.wicket };
+                        populateFielderList();
+                        const modal = new bootstrap.Modal(document.getElementById('fielderModal'));
                         modal.show();
                     } else {
                         addWicket(btn.dataset.wicket);
                     }
                 });
+            });
+            
+            // Disable LBW button if rule is not selected
+            const lbwRuleCheckbox = document.getElementById('lbwRule');
+            const lbwBtn = document.getElementById('lbwBtn');
+            
+            lbwRuleCheckbox.addEventListener('change', function() {
+                if (this.checked) {
+                    lbwBtn.classList.remove('disabled-btn');
+                    lbwBtn.disabled = false;
+                } else {
+                    lbwBtn.classList.add('disabled-btn');
+                    lbwBtn.disabled = true;
+                }
             });
             
             // Generate initial match code
@@ -1339,71 +1252,53 @@
             currentScreen = 'setup';
         }
 
-        // Show toss screen
-        function showTossScreen() {
-            setupScreen.classList.add('d-none');
-            tossScreen.classList.remove('d-none');
-            currentScreen = 'toss';
-            
-            // Update team names
-            const team1Name = document.getElementById('team1Name').value || 'Team 1';
-            const team2Name = document.getElementById('team2Name').value || 'Team 2';
-            document.getElementById('team1NameToss').textContent = team1Name;
-            document.getElementById('team2NameToss').textContent = team2Name;
-            
-            // Populate captain dropdowns
-            populateCaptainDropdowns();
-        }
-
-        // Populate captain dropdowns
-        function populateCaptainDropdowns() {
-            const team1PlayersText = document.getElementById('team1Players').value;
-            const team2PlayersText = document.getElementById('team2Players').value;
-            
-            const team1Players = team1PlayersText ? team1PlayersText.split('\n').filter(p => p.trim()) : ['Player 1', 'Player 2'];
-            const team2Players = team2PlayersText ? team2PlayersText.split('\n').filter(p => p.trim()) : ['Player 1', 'Player 2'];
-            
-            const team1CaptainSelect = document.getElementById('team1Captain');
-            const team2CaptainSelect = document.getElementById('team2Captain');
-            
-            team1CaptainSelect.innerHTML = '<option value="">Select Captain</option>';
-            team2CaptainSelect.innerHTML = '<option value="">Select Captain</option>';
-            
-            team1Players.forEach(player => {
-                const option = document.createElement('option');
-                option.value = player;
-                option.textContent = player;
-                team1CaptainSelect.appendChild(option);
-            });
-            
-            team2Players.forEach(player => {
-                const option = document.createElement('option');
-                option.value = player;
-                option.textContent = player;
-                team2CaptainSelect.appendChild(option);
-            });
-        }
-
-        // Select toss choice
-        function selectTossChoice(team, choice) {
+        // Select team for toss
+        function selectTeam(team) {
             // Reset buttons
-            document.querySelectorAll('#tossScreen .btn-outline-primary').forEach(btn => {
+            document.querySelectorAll('#tossModal .btn-outline-primary').forEach(btn => {
                 btn.classList.remove('active');
             });
             
             // Set active button
-            const btn = document.getElementById(`${team}${choice.charAt(0).toUpperCase() + choice.slice(1)}`);
+            const btn = document.getElementById(`${team}TeamBtn`);
+            btn.classList.add('active');
+        }
+
+        // Select toss choice
+        function selectChoice(choice) {
+            // Reset buttons
+            document.querySelectorAll('#tossModal .btn-outline-primary').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Set active button
+            const btn = document.getElementById(`${choice}Btn`);
             btn.classList.add('active');
         }
 
         // Flip coin
         function flipCoin() {
             const coin = document.getElementById('tossCoin');
+            const coinFront = document.getElementById('coinFront');
+            const coinBack = document.getElementById('coinBack');
+            
+            // Hide both sides initially
+            coinFront.style.display = 'none';
+            coinBack.style.display = 'none';
+            
             coin.classList.add('flipping');
             
             setTimeout(() => {
                 coin.classList.remove('flipping');
                 const result = Math.random() > 0.5 ? 'heads' : 'tails';
+                
+                // Show only the result side
+                if (result === 'heads') {
+                    coinFront.style.display = 'flex';
+                } else {
+                    coinBack.style.display = 'flex';
+                }
+                
                 document.getElementById('tossResultText').textContent = result.toUpperCase();
                 document.getElementById('tossWinnerText').textContent = `Congratulations to the winner!`;
                 document.getElementById('tossResult').style.display = 'block';
@@ -1415,17 +1310,17 @@
 
         // Use toss result
         function useTossResult() {
-            const team1Choice = document.querySelector('#team1Heads.active') ? 'heads' : 
-                              document.querySelector('#team1Tails.active') ? 'tails' : '';
-            const team2Choice = document.querySelector('#team2Heads.active') ? 'heads' : 
-                              document.querySelector('#team2Tails.active') ? 'tails' : '';
+            const teamChoice = document.querySelector('#homeTeamBtn.active') ? 'home' : 
+                              document.querySelector('#awayTeamBtn.active') ? 'away' : '';
+            const tossChoice = document.querySelector('#headsBtn.active') ? 'heads' : 
+                              document.querySelector('#tailsBtn.active') ? 'tails' : '';
             
-            if (!team1Choice || !team2Choice) {
-                alert('Please select choices for both teams');
+            if (!teamChoice || !tossChoice) {
+                alert('Please select team and choice');
                 return;
             }
             
-            const winner = matchData.toss.result === team1Choice ? 'team1' : 'team2';
+            const winner = matchData.toss.result === tossChoice ? 'team1' : 'team2';
             const team1Name = document.getElementById('team1Name').value || 'Team 1';
             const team2Name = document.getElementById('team2Name').value || 'Team 2';
             const winnerName = winner === 'team1' ? team1Name : team2Name;
@@ -1436,10 +1331,9 @@
             // Add commentary
             addCommentaryItem(`${winnerName} won the toss and elected to bat first.`);
             
-            // Go to scoring screen
-            tossScreen.classList.add('d-none');
-            scoringScreen.classList.remove('d-none');
-            currentScreen = 'scoring';
+            // Close modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById('tossModal'));
+            modal.hide();
         }
 
         // Start scoring
@@ -1453,9 +1347,8 @@
                 freehit: document.getElementById('freeHitRule').checked,
                 bye: document.getElementById('byeRule').checked,
                 legbye: document.getElementById('legByeRule').checked,
-                overthrow: document.getElementById('overThrowRule').checked,
-                mankading: document.getElementById('mankadingRule').checked,
                 lbw: document.getElementById('lbwRule').checked,
+                mankading: document.getElementById('mankadingRule').checked,
                 dls: document.getElementById('dlsRule').checked
             };
             
@@ -1486,14 +1379,27 @@
             
             // Update team names in commentary
             document.getElementById('team1NameDisplay').textContent = matchData.team1.name;
+            
+            // Disable buttons based on rules
+            updateRuleButtons();
         }
 
-        // Generate random match code
+        // Update rule buttons based on selected rules
+        function updateRuleButtons() {
+            const lbwRuleCheckbox = document.getElementById('lbwRule');
+            const lbwBtn = document.getElementById('lbwBtn');
+            
+            if (!lbwRuleCheckbox.checked) {
+                lbwBtn.classList.add('disabled-btn');
+                lbwBtn.disabled = true;
+            }
+        }
+
+        // Generate random match code (only numbers)
         function generateMatchCode() {
-            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
             let code = '';
             for (let i = 0; i < 6; i++) {
-                code += chars.charAt(Math.floor(Math.random() * chars.length));
+                code += Math.floor(Math.random() * 10);
             }
             matchData.code = code;
             if (matchCodeDisplay) {
@@ -1515,7 +1421,7 @@
 
         // Join match (view only)
         function joinMatch() {
-            const code = document.getElementById('matchCodeInput').value.toUpperCase();
+            const code = document.getElementById('matchCodeInput').value;
             
             if (code === matchData.code) {
                 // Switch to viewer screen
@@ -1603,6 +1509,10 @@
             const commentaryText = generateRunCommentary(runs);
             addCommentaryItem(commentaryText);
             
+            // Start ball tracking process
+            matchData.pendingAction = { type: 'runs', runs: runs };
+            showPitchTracking();
+            
             // Update displays
             updateScoreDisplay();
             if (currentScreen === 'viewer') {
@@ -1622,14 +1532,12 @@
                     break;
                 case 'bye':
                 case 'legbye':
-                case 'overthrow':
                     battingTeam.score += 1; // For demo, we'll just add 1
                     battingTeam.balls++;
                     // Add commentary
                     const extraTexts = {
                         'bye': "Bye run taken!",
-                        'legbye': "Leg bye run taken!",
-                        'overthrow': "Over throw! Extra runs!"
+                        'legbye': "Leg bye run taken!"
                     };
                     addCommentaryItem(extraTexts[extraType]);
                     break;
@@ -1648,6 +1556,10 @@
                 content: extraType === 'wide' ? 'W' : 'B', 
                 type: extraType 
             });
+            
+            // Start ball tracking process
+            matchData.pendingAction = { type: 'extra', extraType: extraType };
+            showPitchTracking();
             
             // Update displays
             updateScoreDisplay();
@@ -1693,6 +1605,10 @@
             // Add to match data
             matchData.balls.push({ content: 'NB', type: 'noball' });
             
+            // Start ball tracking process
+            matchData.pendingAction = { type: 'noball', runs: runs };
+            showPitchTracking();
+            
             // Close modal
             const modal = bootstrap.Modal.getInstance(document.getElementById('noBallModal'));
             modal.hide();
@@ -1704,38 +1620,135 @@
             }
         }
 
-        // Show drop catch options
-        function showDropCatch(show) {
-            document.getElementById('dropCatchSection').style.display = show ? 'block' : 'none';
+        // Populate fielder list
+        function populateFielderList() {
+            const fielderList = document.getElementById('fielderList');
+            fielderList.innerHTML = '';
+            
+            // Get fielding team players
+            const fieldingTeam = matchData.currentInnings === 1 ? matchData.team2 : matchData.team1;
+            const players = fieldingTeam.players;
+            
+            if (players && players.length > 0) {
+                players.forEach(player => {
+                    const button = document.createElement('button');
+                    button.className = 'btn btn-outline-primary me-2 mb-2';
+                    button.textContent = player;
+                    button.onclick = () => {
+                        document.getElementById('customFielder').value = player;
+                    };
+                    fielderList.appendChild(button);
+                });
+            } else {
+                fielderList.innerHTML = '<p class="text-muted">No players added for fielding team</p>';
+            }
         }
 
-        // Confirm catch details
-        function confirmCatch(type) {
-            const fielderName = document.getElementById('fielderName').value || 'Fielder';
-            
-            let commentaryText = '';
-            switch(type) {
-                case 'fantastic':
-                    commentaryText = `WHAT A CATCH! ${fielderName} putting his body on the line to take an incredible catch!`;
-                    break;
-                case 'easy':
-                    commentaryText = `DROP CATCH! ${fielderName} dropped an easy catch. Can this drop cost them the match?`;
-                    break;
-                case 'tough':
-                    commentaryText = `TOUGH LUCK! ${fielderName} made his ground but couldn't hold the ball. What an effort though!`;
-                    break;
-                default:
-                    commentaryText = `${fielderName} takes a good catch!`;
-            }
-            
-            addCommentaryItem(commentaryText);
-            
-            // Add wicket
-            addWicket('caught');
+        // Confirm fielder selection
+        function confirmFielder() {
+            const fielderName = document.getElementById('customFielder').value || 'Fielder';
             
             // Close modal
-            const modal = bootstrap.Modal.getInstance(document.getElementById('catchModal'));
+            const modal = bootstrap.Modal.getInstance(document.getElementById('fielderModal'));
             modal.hide();
+            
+            // Execute pending action
+            if (matchData.pendingAction) {
+                const action = matchData.pendingAction;
+                if (action.type === 'wicket') {
+                    // Add commentary for catch
+                    if (action.wicketType === 'caught') {
+                        addCommentaryItem(`${fielderName} takes a brilliant catch!`);
+                    } else if (action.wicketType === 'runout') {
+                        addCommentaryItem(`Run out! Great work by ${fielderName}!`);
+                    }
+                    addWicket(action.wicketType);
+                }
+                matchData.pendingAction = null;
+            }
+        }
+
+        // Show pitch tracking
+        function showPitchTracking() {
+            const modal = new bootstrap.Modal(document.getElementById('pitchModal'));
+            modal.show();
+            
+            // Clear existing markers
+            document.querySelectorAll('.pitch-marker').forEach(marker => marker.remove());
+            
+            // Add click event to pitch map
+            const pitchMap = document.getElementById('pitchMapModal');
+            pitchMap.onclick = function(e) {
+                const rect = pitchMap.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                // Create marker
+                const marker = document.createElement('div');
+                marker.className = 'pitch-marker';
+                marker.style.left = `${x}px`;
+                marker.style.top = `${y}px`;
+                pitchMap.appendChild(marker);
+                
+                // Store marker position
+                matchData.pitchMarkers.push({ x, y });
+            };
+        }
+
+        // Save pitch tracking
+        function savePitchTracking() {
+            // Close pitch modal
+            const pitchModal = bootstrap.Modal.getInstance(document.getElementById('pitchModal'));
+            pitchModal.hide();
+            
+            // Show ground tracking modal
+            const groundModal = new bootstrap.Modal(document.getElementById('groundModal'));
+            groundModal.show();
+            
+            // Clear existing markers
+            document.querySelectorAll('.ground-marker').forEach(marker => marker.remove());
+            
+            // Add click event to ground map
+            const groundMap = document.getElementById('groundMapModal');
+            groundMap.onclick = function(e) {
+                const rect = groundMap.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                // Create marker
+                const marker = document.createElement('div');
+                marker.className = 'ground-marker';
+                marker.style.left = `${x}px`;
+                marker.style.top = `${y}px`;
+                groundMap.appendChild(marker);
+                
+                // Store marker position
+                matchData.groundMarkers.push({ x, y });
+            };
+        }
+
+        // Save ground tracking
+        function saveGroundTracking() {
+            // Close ground modal
+            const groundModal = bootstrap.Modal.getInstance(document.getElementById('groundModal'));
+            groundModal.hide();
+            
+            // Add commentary based on tracking
+            if (matchData.groundMarkers.length > 0) {
+                const lastMarker = matchData.groundMarkers[matchData.groundMarkers.length - 1];
+                const distance = Math.sqrt(Math.pow(lastMarker.x - 150, 2) + Math.pow(lastMarker.y - 150, 2));
+                if (distance > 120) {
+                    addCommentaryItem("Six! The ball sailed over the boundary rope!");
+                } else if (distance > 80) {
+                    addCommentaryItem("Four! Cleanly hit through the covers!");
+                } else {
+                    addCommentaryItem("Well played shot into the gap.");
+                }
+            }
+            
+            // Clear markers for next ball
+            matchData.pitchMarkers = [];
+            matchData.groundMarkers = [];
         }
 
         // Add wicket
@@ -1774,75 +1787,15 @@
             const commentaryText = generateWicketCommentary(wicketType, wicketInfo.batsman);
             addCommentaryItem(commentaryText);
             
+            // Start ball tracking process
+            matchData.pendingAction = { type: 'wicket', wicketType: wicketType };
+            showPitchTracking();
+            
             // Update displays
             updateScoreDisplay();
             if (currentScreen === 'viewer') {
                 updateViewerDisplay();
             }
-        }
-
-        // Show pitch map
-        function showPitchMap() {
-            const pitchMap = document.getElementById('pitchMap');
-            
-            // Clear existing markers
-            document.querySelectorAll('.pitch-marker').forEach(marker => marker.remove());
-            
-            // Add click event to pitch map
-            pitchMap.addEventListener('click', function(e) {
-                const rect = pitchMap.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                // Create marker
-                const marker = document.createElement('div');
-                marker.className = 'pitch-marker';
-                marker.style.left = `${x}px`;
-                marker.style.top = `${y}px`;
-                pitchMap.appendChild(marker);
-                
-                // Store marker position
-                matchData.pitchMarkers.push({ x, y });
-                
-                // Add commentary
-                addCommentaryItem("Ball pitched on middle stump, good length delivery.");
-            }, { once: true });
-            
-            alert('Click on the pitch to mark where the ball pitched');
-        }
-
-        // Show ground map
-        function showGroundMap() {
-            const groundMap = document.getElementById('groundMap');
-            
-            // Add click event to ground map
-            groundMap.addEventListener('click', function(e) {
-                const rect = groundMap.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                // Create marker
-                const marker = document.createElement('div');
-                marker.className = 'six-point';
-                marker.style.left = `${x}px`;
-                marker.style.top = `${y}px`;
-                groundMap.appendChild(marker);
-                
-                // Store marker position
-                matchData.groundMarkers.push({ x, y });
-                
-                // Add commentary based on position
-                const distance = Math.sqrt(Math.pow(x - 150, 2) + Math.pow(y - 150, 2));
-                if (distance > 120) {
-                    addCommentaryItem("Six! The ball sailed over the boundary rope!");
-                } else if (distance > 80) {
-                    addCommentaryItem("Four! Cleanly hit through the covers!");
-                } else {
-                    addCommentaryItem("Well played shot into the gap.");
-                }
-            }, { once: true });
-            
-            alert('Click on the ground to mark where the ball went');
         }
 
         // Add ball to display
@@ -1908,6 +1861,8 @@
                 return `${batsman} hits a cracking boundary! Four runs!`;
             } else if (runs === 6) {
                 return `${batsman} sends it sailing over the ropes! Six runs!`;
+            } else if (runs === 5) {
+                return `${batsman} takes five runs with a quick single and overthrow!`;
             }
             
             return runComments[Math.floor(Math.random() * runComments.length)];
@@ -1917,7 +1872,6 @@
         function generateWicketCommentary(wicketType, batsman) {
             const bowler = matchData.currentBowler;
             const battingTeam = matchData.currentInnings === 1 ? matchData.team1 : matchData.team2;
-            const bowlingTeam = matchData.currentInnings === 1 ? matchData.team2 : matchData.team1;
             
             const wicketComments = {
                 'bowled': `WHAT A BALL! ${bowler} delivers a toe crusher hitting the middle stump. ${batsman}'s stumps went for a walk!`,
@@ -2097,21 +2051,14 @@
             showScreen('setup');
         });
 
-        document.getElementById('tossLink').addEventListener('click', function(e) {
-            e.preventDefault();
-            showTossScreen();
-        });
-
         document.getElementById('viewMatchLink').addEventListener('click', function(e) {
             e.preventDefault();
-            const modal = new bootstrap.Modal(document.getElementById('viewMatchModal'));
-            modal.show();
+            // Modal will be shown by data-bs-toggle
         });
 
         function showScreen(screen) {
             welcomeScreen.classList.add('d-none');
             setupScreen.classList.add('d-none');
-            tossScreen.classList.add('d-none');
             scoringScreen.classList.add('d-none');
             summaryScreen.classList.add('d-none');
             viewerScreen.classList.add('d-none');
@@ -2122,9 +2069,6 @@
                     break;
                 case 'setup':
                     setupScreen.classList.remove('d-none');
-                    break;
-                case 'toss':
-                    tossScreen.classList.remove('d-none');
                     break;
                 case 'scoring':
                     scoringScreen.classList.remove('d-none');
@@ -2142,3 +2086,4 @@
     </script>
 </body>
 </html>
+```
