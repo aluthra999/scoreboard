@@ -43,4 +43,4 @@ A comprehensive web-based cricket scoring application designed specifically for 
 ### Installation
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/gully-cricket-tracker.git
+git clone https://github.com/aluthra999/gully-cricket-tracker.git
