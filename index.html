@@ -404,6 +404,14 @@
             border-radius: 10px;
             font-size: 0.8rem;
         }
+        
+        .super-over-section {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+        }
     </style>
 </head>
 <body>
@@ -692,6 +700,17 @@
                         </div>
                     </div>
                     
+                    <!-- Super Over Section -->
+                    <div id="superOverSection" class="super-over-section d-none">
+                        <h5 class="text-center"><i class="fas fa-bolt"></i> Super Over</h5>
+                        <p class="text-center">Each team gets 1 over to break the tie</p>
+                        <div class="text-center">
+                            <button class="btn btn-warning" id="startSuperOverBtn">
+                                <i class="fas fa-play"></i> Start Super Over
+                            </button>
+                        </div>
+                    </div>
+                    
                     <!-- Commentary Section -->
                     <div class="card mt-4">
                         <div class="card-header">
@@ -801,38 +820,50 @@
                             <i class="fas fa-trophy"></i> Match Result
                         </div>
                         <div class="card-body text-center">
-                            <h3 class="mb-4" id="matchResult">Home Team won by 5 wickets</h3>
-                            <div class="score-display mb-4" id="finalScore">180/7 (19.4 overs)</div>
+                            <h3 class="mb-4" id="matchResult">Match Result</h3>
+                            <div class="score-display mb-4" id="finalScore">0/0 (0.0 overs)</div>
                             
                             <div class="row mb-4">
                                 <div class="col-md-6 mb-3">
                                     <h5>Innings 1</h5>
-                                    <div class="score-display" id="innings1Score">180/7</div>
-                                    <p id="innings1Details">20 overs</p>
+                                    <div class="score-display" id="innings1Score">0/0</div>
+                                    <p id="innings1Details">0 overs</p>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <h5>Innings 2</h5>
-                                    <div class="score-display" id="innings2Score">175/9</div>
-                                    <p id="innings2Details">19.4 overs</p>
+                                    <div class="score-display" id="innings2Score">0/0</div>
+                                    <p id="innings2Details">0.0 overs</p>
+                                </div>
+                            </div>
+                            
+                            <div id="superOverResult" class="mb-4 d-none">
+                                <h5>Super Over Result</h5>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p id="superOverTeam1">Team 1: 0/0</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p id="superOverTeam2">Team 2: 0/0</p>
+                                    </div>
                                 </div>
                             </div>
                             
                             <div class="mb-4">
                                 <h5>Man of the Match</h5>
-                                <p id="manOfMatch">Player Name (Team) - 85 runs, 3 wickets</p>
+                                <p id="manOfMatch">-</p>
                             </div>
                             
                             <div class="mb-4">
                                 <h5>Match Statistics</h5>
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <p><strong>Highest Score:</strong> <span id="highestScore">85*</span></p>
+                                        <p><strong>Highest Score:</strong> <span id="highestScore">-</span></p>
                                     </div>
                                     <div class="col-md-4">
-                                        <p><strong>Best Bowling:</strong> <span id="bestBowling">3/25</span></p>
+                                        <p><strong>Best Bowling:</strong> <span id="bestBowling">-</span></p>
                                     </div>
                                     <div class="col-md-4">
-                                        <p><strong>Total Extras:</strong> <span id="totalExtras">18</span></p>
+                                        <p><strong>Total Extras:</strong> <span id="totalExtras">0</span></p>
                                     </div>
                                 </div>
                             </div>
@@ -1229,8 +1260,8 @@
                         <div id="scorecardPreview" class="bg-white text-dark p-4 rounded" style="min-height: 300px;">
                             <h3>GULLY CRICKET MATCH SCORECARD</h3>
                             <p id="scorecardTeams">Home vs Away</p>
-                            <div id="scorecardFinalScore" class="fs-4 fw-bold">180/7 (20 overs)</div>
-                            <p id="scorecardResult">Home Team won by 5 wickets</p>
+                            <div id="scorecardFinalScore" class="fs-4 fw-bold">0/0 (0.0 overs)</div>
+                            <p id="scorecardResult">Match Result</p>
                             <p id="scorecardDate">Match Date: <span id="currentDate"></span></p>
                         </div>
                     </div>
@@ -1246,7 +1277,7 @@
 
     <!-- Footer -->
     <div class="container footer">
-        <p>&copy; <span id="currentYear">2023</span> - Made by Ankit Luthra. All rights reserved.</p>
+        <p>&copy; <span id="currentYear">2023</span> Made by Ankit Luthra. All rights reserved.</p>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -1291,7 +1322,18 @@
             battingTeam: null,
             bowlingTeam: null,
             selectedBatsmen: [],
-            selectedBowlers: []
+            selectedBowlers: [],
+            superOver: {
+                active: false,
+                team1Score: 0,
+                team1Wickets: 0,
+                team1Balls: 0,
+                team2Score: 0,
+                team2Wickets: 0,
+                team2Balls: 0,
+                battingTeam: null,
+                bowlingTeam: null
+            }
         };
 
         // DOM Elements
@@ -1333,6 +1375,7 @@
             document.getElementById('endInningsBtn').addEventListener('click', endInnings);
             document.getElementById('confirmPlayerSelectionBtn').addEventListener('click', confirmPlayerSelection);
             document.getElementById('skipPlayerSelectionBtn').addEventListener('click', skipPlayerSelection);
+            document.getElementById('startSuperOverBtn').addEventListener('click', startSuperOver);
             
             // Toss events
             document.getElementById('flipCoinBtn').addEventListener('click', flipCoin);
@@ -2477,6 +2520,17 @@
                 matchData.pitchMarkers = [];
                 matchData.groundMarkers = [];
                 matchData.target = 0;
+                matchData.superOver = {
+                    active: false,
+                    team1Score: 0,
+                    team1Wickets: 0,
+                    team1Balls: 0,
+                    team2Score: 0,
+                    team2Wickets: 0,
+                    team2Balls: 0,
+                    battingTeam: null,
+                    bowlingTeam: null
+                };
                 
                 // Re-select initial players
                 selectInitialPlayers();
@@ -2528,8 +2582,41 @@
                     updateViewerDisplay();
                 }
             } else {
-                // End of match
-                finishMatch();
+                // Check for tie and super over
+                if (matchData.team1.score === matchData.team2.score) {
+                    document.getElementById('superOverSection').classList.remove('d-none');
+                    addCommentaryItem("Match tied! Super Over will decide the winner.");
+                } else {
+                    // End of match
+                    finishMatch();
+                }
+            }
+        }
+
+        // Start Super Over
+        function startSuperOver() {
+            matchData.superOver.active = true;
+            matchData.superOver.battingTeam = matchData.team2; // Team batting second bats first in super over
+            matchData.superOver.bowlingTeam = matchData.team1;
+            
+            // Reset super over scores
+            matchData.superOver.team1Score = 0;
+            matchData.superOver.team1Wickets = 0;
+            matchData.superOver.team1Balls = 0;
+            matchData.superOver.team2Score = 0;
+            matchData.superOver.team2Wickets = 0;
+            matchData.superOver.team2Balls = 0;
+            
+            // Hide super over section
+            document.getElementById('superOverSection').classList.add('d-none');
+            
+            // Add commentary
+            addCommentaryItem("Super Over begins! Each team gets 1 over to break the tie.");
+            
+            // Update displays
+            updateScoreDisplay();
+            if (currentScreen === 'viewer') {
+                updateViewerDisplay();
             }
         }
 
@@ -2541,34 +2628,79 @@
             
             // Determine winner
             let winner = '';
-            if (matchData.currentInnings === 2) {
-                if (matchData.team2.score >= matchData.target) {
-                    winner = `${matchData.team2.name} won by ${10 - matchData.team2.wickets} wickets`;
+            let resultText = '';
+            
+            if (matchData.superOver.active) {
+                // Super over result
+                if (matchData.superOver.team1Score > matchData.superOver.team2Score) {
+                    winner = `${matchData.team1.name} won in Super Over`;
+                    resultText = `${matchData.team1.name} won by Super Over`;
+                } else if (matchData.superOver.team2Score > matchData.superOver.team1Score) {
+                    winner = `${matchData.team2.name} won in Super Over`;
+                    resultText = `${matchData.team2.name} won by Super Over`;
                 } else {
-                    winner = `${matchData.team1.name} won by ${matchData.target - matchData.team2.score - 1} runs`;
+                    winner = "Match tied after Super Over";
+                    resultText = "Match tied after Super Over";
                 }
+                
+                // Show super over result
+                document.getElementById('superOverResult').classList.remove('d-none');
+                document.getElementById('superOverTeam1').textContent = `${matchData.team1.name}: ${matchData.superOver.team1Score}/${matchData.superOver.team1Wickets}`;
+                document.getElementById('superOverTeam2').textContent = `${matchData.team2.name}: ${matchData.superOver.team2Score}/${matchData.superOver.team2Wickets}`;
             } else {
-                winner = `${matchData.team1.name} won by innings`;
+                // Regular match result
+                if (matchData.team1.score > matchData.team2.score) {
+                    const runsWonBy = matchData.team1.score - matchData.team2.score;
+                    winner = `${matchData.team1.name} won by ${runsWonBy} runs`;
+                    resultText = `${matchData.team1.name} won by ${runsWonBy} runs`;
+                } else if (matchData.team2.score > matchData.team1.score) {
+                    const wicketsRemaining = 10 - matchData.team2.wickets;
+                    winner = `${matchData.team2.name} won by ${wicketsRemaining} wickets`;
+                    resultText = `${matchData.team2.name} won by ${wicketsRemaining} wickets`;
+                } else {
+                    winner = "Match tied";
+                    resultText = "Match tied";
+                }
             }
             
             // Set match result
-            document.getElementById('matchResult').textContent = winner;
+            document.getElementById('matchResult').textContent = resultText;
+            
+            // Update final scores
             document.getElementById('finalScore').textContent = 
                 `${matchData.team2.score}/${matchData.team2.wickets} (${matchData.team2.overs}.${matchData.team2.balls} overs)`;
+            
+            // Update innings scores
+            document.getElementById('innings1Score').textContent = 
+                `${matchData.team1.score}/${matchData.team1.wickets}`;
+            document.getElementById('innings1Details').textContent = 
+                `${matchData.team1.overs} overs`;
+                
+            document.getElementById('innings2Score').textContent = 
+                `${matchData.team2.score}/${matchData.team2.wickets}`;
+            document.getElementById('innings2Details').textContent = 
+                `${matchData.team2.overs}.${matchData.team2.balls} overs`;
             
             // Update scorecard preview
             document.getElementById('scorecardTeams').textContent = 
                 `${matchData.team1.name} vs ${matchData.team2.name}`;
             document.getElementById('scorecardFinalScore').textContent = 
                 `${matchData.team2.score}/${matchData.team2.wickets} (${matchData.team2.overs}.${matchData.team2.balls} overs)`;
-            document.getElementById('scorecardResult').textContent = winner;
+            document.getElementById('scorecardResult').textContent = resultText;
         }
 
         // Share on WhatsApp
         function shareOnWhatsApp() {
-            const message = `🏏 *Match Result* 🏏\n\n` +
-                `🏆 ${matchData.team1.name} vs ${matchData.team2.name}\n\n` +
-                `Final Score: ${matchData.team2.score}/${matchData.team2.wickets} (${matchData.team2.overs}.${matchData.team2.balls} overs)\n\n` +
+            let message = `🏏 *Match Result* 🏏\n\n` +
+                `🏆 ${matchData.team1.name} vs ${matchData.team2.name}\n\n`;
+                
+            if (matchData.superOver.active) {
+                message += `Super Over Result:\n` +
+                    `${matchData.team1.name}: ${matchData.superOver.team1Score}/${matchData.superOver.team1Wickets}\n` +
+                    `${matchData.team2.name}: ${matchData.superOver.team2Score}/${matchData.superOver.team2Wickets}\n\n`;
+            }
+            
+            message += `Final Score: ${matchData.team2.score}/${matchData.team2.wickets} (${matchData.team2.overs}.${matchData.team2.balls} overs)\n\n` +
                 `Result: ${document.getElementById('matchResult').textContent}\n\n` +
                 `View full scorecard: [Match Code: ${matchData.code}]`;
             
