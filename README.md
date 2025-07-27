@@ -2,8 +2,6 @@
 
 A comprehensive web-based cricket scoring application designed specifically for gully/club cricket matches. Track scores, generate commentary, and share results - all without requiring user login.
 
-![Cricket Tracker Demo](https://aluthra999.github.io/scoreboard)
-
 ## 🏏 Features
 
 ### Core Functionality
