@@ -6,6 +6,8 @@
     <title>Gully Cricket Score Tracker</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         :root {
             --primary-color: #2c3e50;
@@ -202,6 +204,35 @@
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             color: rgba(255, 255, 255, 0.7);
         }
+        
+        .commentary-box {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 1rem;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .commentary-item {
+            margin-bottom: 0.5rem;
+            padding: 0.5rem;
+            border-left: 3px solid #3498db;
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .modal-content {
+            background: #2c3e50;
+            color: white;
+        }
+        
+        .modal-header {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .modal-footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
     </style>
 </head>
 <body>
@@ -368,6 +399,10 @@
                                                 <label class="form-check-label" for="mankadingRule">Mankading</label>
                                             </div>
                                             <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="lbwRule" checked>
+                                                <label class="form-check-label" for="lbwRule">LBW</label>
+                                            </div>
+                                            <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" id="dlsRule" checked>
                                                 <label class="form-check-label" for="dlsRule">DLS Method</label>
                                             </div>
@@ -469,6 +504,26 @@
                                         <button class="btn btn-danger wicket-btn" data-wicket="mankading">Mankading</button>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Commentary Section -->
+                    <div class="card mt-4">
+                        <div class="card-header">
+                            <i class="fas fa-comment"></i> Live Commentary
+                        </div>
+                        <div class="card-body">
+                            <div class="commentary-box" id="commentaryBox">
+                                <div class="commentary-item">
+                                    Match started! <span id="team1NameDisplay">Team 1</span> won the toss and elected to bat first.
+                                </div>
+                            </div>
+                            <div class="mt-3">
+                                <textarea class="form-control" id="commentaryInput" rows="2" placeholder="Add your commentary..."></textarea>
+                                <button class="btn btn-primary btn-sm mt-2" id="addCommentaryBtn">
+                                    <i class="fas fa-plus"></i> Add Commentary
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -618,8 +673,11 @@
                             <button class="btn btn-primary w-100 mb-2" id="twitterBtn">
                                 <i class="fab fa-twitter"></i> Share on Twitter
                             </button>
-                            <button class="btn btn-secondary w-100" id="copyResultBtn">
-                                <i class="fas fa-copy"></i> Copy Result Text
+                            <button class="btn btn-secondary w-100 mb-2" id="exportReportBtn" data-bs-toggle="modal" data-bs-target="#exportModal">
+                                <i class="fas fa-file-export"></i> Export Report
+                            </button>
+                            <button class="btn btn-info w-100" id="shareScorecardBtn" data-bs-toggle="modal" data-bs-target="#shareScorecardModal">
+                                <i class="fas fa-image"></i> Share Scorecard
                             </button>
                         </div>
                     </div>
@@ -666,6 +724,93 @@
         </div>
     </div>
 
+    <!-- No Ball Details Modal -->
+    <div class="modal fade" id="noBallModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content bg-dark text-light">
+                <div class="modal-header">
+                    <h5 class="modal-title">No Ball Details</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Type of No Ball</label>
+                        <select class="form-select" id="noBallType">
+                            <option value="frontFoot">Front Foot No Ball</option>
+                            <option value="backFoot">Back Foot No Ball</option>
+                            <option value="waistHigh">Over the Waist</option>
+                            <option value="fielding">Fielding Restriction</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="mb-3" id="otherNoBallContainer" style="display: none;">
+                        <label for="otherNoBall" class="form-label">Specify Other Type</label>
+                        <input type="text" class="form-control" id="otherNoBall" placeholder="Enter details">
+                    </div>
+                    <div class="mb-3">
+                        <label for="noBallRuns" class="form-label">Runs Scored (including penalty)</label>
+                        <input type="number" class="form-control" id="noBallRuns" value="1" min="1">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="confirmNoBallBtn">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Export Report Modal -->
+    <div class="modal fade" id="exportModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content bg-dark text-light">
+                <div class="modal-header">
+                    <h5 class="modal-title">Export Match Report</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Choose the format for your match report:</p>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary" id="exportCsvBtn">
+                            <i class="fas fa-file-csv"></i> Export as CSV
+                        </button>
+                        <button class="btn btn-danger" id="exportPdfBtn">
+                            <i class="fas fa-file-pdf"></i> Export as PDF
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Share Scorecard Modal -->
+    <div class="modal fade" id="shareScorecardModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content bg-dark text-light">
+                <div class="modal-header">
+                    <h5 class="modal-title">Share Scorecard</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center mb-3">
+                        <div id="scorecardPreview" class="bg-white text-dark p-4 rounded" style="min-height: 300px;">
+                            <h3>GULLY CRICKET MATCH SCORECARD</h3>
+                            <p id="scorecardTeams">Team 1 vs Team 2</p>
+                            <div id="scorecardFinalScore" class="fs-4 fw-bold">180/7 (20 overs)</div>
+                            <p id="scorecardResult">Team 1 won by 5 wickets</p>
+                            <p id="scorecardDate">Match Date: <span id="currentDate"></span></p>
+                        </div>
+                    </div>
+                    <div class="d-grid">
+                        <button class="btn btn-success" id="shareScorecardImageBtn">
+                            <i class="fab fa-whatsapp"></i> Share as Image on WhatsApp
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <div class="container footer">
         <p>&copy; 2023 Gully Cricket Score Tracker | Made for cricket lovers</p>
@@ -688,7 +833,8 @@
             target: 0,
             currentBatsmen: [],
             currentBowler: null,
-            recentWickets: []
+            recentWickets: [],
+            commentary: []
         };
 
         // DOM Elements
@@ -702,6 +848,7 @@
         const ballDisplay = document.getElementById('ballDisplay');
         const oversProgressBar = document.getElementById('oversProgressBar');
         const oversProgressText = document.getElementById('oversProgressText');
+        const commentaryBox = document.getElementById('commentaryBox');
 
         // Initialize the app
         document.addEventListener('DOMContentLoaded', function() {
@@ -711,6 +858,17 @@
             document.getElementById('copyCodeBtn').addEventListener('click', copyMatchCode);
             document.getElementById('finishMatchBtn').addEventListener('click', finishMatch);
             document.getElementById('whatsappBtn').addEventListener('click', shareOnWhatsApp);
+            document.getElementById('exportCsvBtn').addEventListener('click', exportAsCSV);
+            document.getElementById('exportPdfBtn').addEventListener('click', exportAsPDF);
+            document.getElementById('shareScorecardImageBtn').addEventListener('click', shareScorecardAsImage);
+            document.getElementById('addCommentaryBtn').addEventListener('click', addCommentary);
+            document.getElementById('confirmNoBallBtn').addEventListener('click', confirmNoBall);
+            
+            // No ball type change
+            document.getElementById('noBallType').addEventListener('change', function() {
+                const otherContainer = document.getElementById('otherNoBallContainer');
+                otherContainer.style.display = this.value === 'other' ? 'block' : 'none';
+            });
             
             // Scoring buttons
             document.querySelectorAll('[data-score]').forEach(btn => {
@@ -718,7 +876,14 @@
             });
             
             document.querySelectorAll('[data-extra]').forEach(btn => {
-                btn.addEventListener('click', () => addExtra(btn.dataset.extra));
+                btn.addEventListener('click', () => {
+                    if (btn.dataset.extra === 'noball') {
+                        const modal = new bootstrap.Modal(document.getElementById('noBallModal'));
+                        modal.show();
+                    } else {
+                        addExtra(btn.dataset.extra);
+                    }
+                });
             });
             
             document.querySelectorAll('[data-wicket]').forEach(btn => {
@@ -727,6 +892,10 @@
             
             // Generate initial match code
             generateMatchCode();
+            
+            // Set current date in scorecard
+            const now = new Date();
+            document.getElementById('currentDate').textContent = now.toLocaleDateString();
         });
 
         // Show setup screen
@@ -749,6 +918,7 @@
                 legbye: document.getElementById('legByeRule').checked,
                 overthrow: document.getElementById('overThrowRule').checked,
                 mankading: document.getElementById('mankadingRule').checked,
+                lbw: document.getElementById('lbwRule').checked,
                 dls: document.getElementById('dlsRule').checked
             };
             
@@ -776,6 +946,9 @@
             
             // Update display
             updateScoreDisplay();
+            
+            // Update team names in commentary
+            document.getElementById('team1NameDisplay').textContent = matchData.team1.name;
         }
 
         // Generate random match code
@@ -818,6 +991,10 @@
             // Add ball to display
             addBallToDisplay(runs, 'normal');
             
+            // Add commentary
+            const commentaryText = generateRunCommentary(runs);
+            addCommentaryItem(commentaryText);
+            
             // Update display
             updateScoreDisplay();
         }
@@ -828,26 +1005,74 @@
             
             switch(extraType) {
                 case 'wide':
-                case 'noball':
                     battingTeam.score += 1;
-                    // No ball adds to extras but not to ball count
+                    // Add commentary
+                    addCommentaryItem("Wide ball! Extra run added.");
                     break;
                 case 'bye':
                 case 'legbye':
                 case 'overthrow':
-                    // These add runs but don't count as batter runs
                     battingTeam.score += 1; // For demo, we'll just add 1
                     battingTeam.balls++;
+                    // Add commentary
+                    const extraTexts = {
+                        'bye': "Bye run taken!",
+                        'legbye': "Leg bye run taken!",
+                        'overthrow': "Over throw! Extra runs!"
+                    };
+                    addCommentaryItem(extraTexts[extraType]);
                     break;
             }
             
-            if (battingTeam.balls === 6 && extraType !== 'wide' && extraType !== 'noball') {
+            if (battingTeam.balls === 6 && extraType !== 'wide') {
                 battingTeam.balls = 0;
                 battingTeam.overs++;
             }
             
             // Add ball to display
-            addBallToDisplay('W', extraType);
+            addBallToDisplay(extraType === 'wide' ? 'W' : 'B', extraType);
+            
+            // Update display
+            updateScoreDisplay();
+        }
+
+        // Confirm no ball details
+        function confirmNoBall() {
+            const noBallType = document.getElementById('noBallType').value;
+            const otherNoBall = document.getElementById('otherNoBall').value;
+            const runs = parseInt(document.getElementById('noBallRuns').value) || 1;
+            
+            const battingTeam = matchData.currentInnings === 1 ? matchData.team1 : matchData.team2;
+            battingTeam.score += runs;
+            
+            // Add commentary
+            let commentaryText = "No ball! ";
+            switch(noBallType) {
+                case 'frontFoot':
+                    commentaryText += "Front foot no ball.";
+                    break;
+                case 'backFoot':
+                    commentaryText += "Back foot no ball.";
+                    break;
+                case 'waistHigh':
+                    commentaryText += "Ball over the waist.";
+                    break;
+                case 'fielding':
+                    commentaryText += "Fielding restriction violation.";
+                    break;
+                case 'other':
+                    commentaryText += otherNoBall || "Other no ball.";
+                    break;
+            }
+            commentaryText += ` ${runs} run${runs > 1 ? 's' : ''} added.`;
+            addCommentaryItem(commentaryText);
+            
+            // Add ball to display
+            addBallToDisplay('NB', 'noball');
+            
+            // Close modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById('noBallModal'));
+            modal.hide();
             
             // Update display
             updateScoreDisplay();
@@ -881,6 +1106,10 @@
             
             // Add ball to display
             addBallToDisplay('W', 'wicket');
+            
+            // Add commentary
+            const commentaryText = generateWicketCommentary(wicketType, wicketInfo.batsman);
+            addCommentaryItem(commentaryText);
             
             // Update display
             updateScoreDisplay();
@@ -932,6 +1161,83 @@
             }
         }
 
+        // Generate run commentary
+        function generateRunCommentary(runs) {
+            const batsman = matchData.currentBatsmen[0];
+            const bowler = matchData.currentBowler;
+            
+            const runComments = [
+                `${batsman} plays a beautiful cover drive for ${runs} run${runs > 1 ? 's' : ''}!`,
+                `${batsman} finds the gap and takes ${runs} run${runs > 1 ? 's' : ''}.`,
+                `${bowler} delivers a good length ball, ${batsman} hits it well for ${runs} run${runs > 1 ? 's' : ''}.`,
+                `${batsman} capitalizes on the loose delivery for ${runs} run${runs > 1 ? 's' : ''}.`,
+                `What a shot! ${batsman} dispatches the ball for ${runs} run${runs > 1 ? 's' : ''}.`
+            ];
+            
+            if (runs === 4) {
+                return `${batsman} hits a cracking boundary! Four runs!`;
+            } else if (runs === 6) {
+                return `${batsman} sends it sailing over the ropes! Six runs!`;
+            }
+            
+            return runComments[Math.floor(Math.random() * runComments.length)];
+        }
+
+        // Generate wicket commentary
+        function generateWicketCommentary(wicketType, batsman) {
+            const bowler = matchData.currentBowler;
+            const battingTeam = matchData.currentInnings === 1 ? matchData.team1 : matchData.team2;
+            const bowlingTeam = matchData.currentInnings === 1 ? matchData.team2 : matchData.team1;
+            
+            const wicketComments = {
+                'bowled': `WHAT A BALL! ${bowler} delivers a toe crusher hitting the middle stump. ${batsman}'s stumps went for a walk!`,
+                'caught': `${batsman} edges it to the fielder! What a catch!`,
+                'lbw': `LBW! ${batsman} was struck in front of the stumps. The umpire gives it!`,
+                'stumping': `Stumping! ${batsman} was out of his crease and the keeper did the rest!`,
+                'runout': `Run out! ${batsman} couldn't make it back in time!`,
+                'mankading': `Mankading! ${bowler} removes the bails while ${batsman} was backing up!`
+            };
+            
+            let commentary = wicketComments[wicketType] || `${batsman} is out! ${wicketType} dismissal.`;
+            
+            // Add strategic commentary
+            if (battingTeam.wickets >= 5) {
+                commentary += ` With this wicket, the game has changed completely. What will be ${battingTeam.name}'s strategy to not lose this game from here?`;
+            }
+            
+            return commentary;
+        }
+
+        // Add commentary item
+        function addCommentaryItem(text) {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            
+            const commentaryItem = document.createElement('div');
+            commentaryItem.className = 'commentary-item';
+            commentaryItem.innerHTML = `<strong>[${timeString}]</strong> ${text}`;
+            
+            commentaryBox.appendChild(commentaryItem);
+            commentaryBox.scrollTop = commentaryBox.scrollHeight;
+            
+            // Store in match data
+            matchData.commentary.push({
+                time: timeString,
+                text: text
+            });
+        }
+
+        // Add custom commentary
+        function addCommentary() {
+            const input = document.getElementById('commentaryInput');
+            const text = input.value.trim();
+            
+            if (text) {
+                addCommentaryItem(text);
+                input.value = '';
+            }
+        }
+
         // Finish match
         function finishMatch() {
             scoringScreen.classList.add('d-none');
@@ -943,6 +1249,14 @@
                 `${matchData.team1.name} won by 5 wickets`;
             document.getElementById('finalScore').textContent = 
                 `${matchData.team2.score}/${matchData.team2.wickets} (${matchData.team2.overs}.${matchData.team2.balls} overs)`;
+            
+            // Update scorecard preview
+            document.getElementById('scorecardTeams').textContent = 
+                `${matchData.team1.name} vs ${matchData.team2.name}`;
+            document.getElementById('scorecardFinalScore').textContent = 
+                `${matchData.team2.score}/${matchData.team2.wickets} (${matchData.team2.overs}.${matchData.team2.balls} overs)`;
+            document.getElementById('scorecardResult').textContent = 
+                `${matchData.team1.name} won by 5 wickets`;
         }
 
         // Share on WhatsApp
@@ -955,6 +1269,86 @@
             
             const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
             window.open(whatsappUrl, '_blank');
+        }
+
+        // Export as CSV
+        function exportAsCSV() {
+            let csvContent = "GULLY CRICKET MATCH REPORT\n\n";
+            csvContent += `Teams: ${matchData.team1.name} vs ${matchData.team2.name}\n`;
+            csvContent += `Match Code: ${matchData.code}\n`;
+            csvContent += `Final Score: ${matchData.team2.score}/${matchData.team2.wickets} (${matchData.team2.overs}.${matchData.team2.balls} overs)\n`;
+            csvContent += `Result: ${matchData.team1.name} won by 5 wickets\n\n`;
+            
+            csvContent += "Commentary:\n";
+            csvContent += "Time,Comment\n";
+            matchData.commentary.forEach(item => {
+                csvContent += `"${item.time}","${item.text}"\n`;
+            });
+            
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.setAttribute('href', url);
+            link.setAttribute('download', `match_report_${matchData.code}.csv`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Export as PDF
+        function exportAsPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            doc.setFontSize(20);
+            doc.text('GULLY CRICKET MATCH REPORT', 105, 20, null, null, 'center');
+            
+            doc.setFontSize(12);
+            doc.text(`Teams: ${matchData.team1.name} vs ${matchData.team2.name}`, 20, 40);
+            doc.text(`Match Code: ${matchData.code}`, 20, 50);
+            doc.text(`Final Score: ${matchData.team2.score}/${matchData.team2.wickets} (${matchData.team2.overs}.${matchData.team2.balls} overs)`, 20, 60);
+            doc.text(`Result: ${matchData.team1.name} won by 5 wickets`, 20, 70);
+            
+            doc.text('Commentary:', 20, 90);
+            let y = 100;
+            matchData.commentary.slice(0, 20).forEach(item => {
+                if (y > 280) {
+                    doc.addPage();
+                    y = 20;
+                }
+                doc.setFontSize(10);
+                doc.text(`${item.time}: ${item.text}`, 20, y);
+                y += 10;
+            });
+            
+            doc.save(`match_report_${matchData.code}.pdf`);
+        }
+
+        // Share scorecard as image
+        function shareScorecardAsImage() {
+            const scorecard = document.getElementById('scorecardPreview');
+            
+            html2canvas(scorecard).then(canvas => {
+                canvas.toBlob(blob => {
+                    const file = new File([blob], `scorecard_${matchData.code}.png`, { type: 'image/png' });
+                    
+                    if (navigator.share) {
+                        navigator.share({
+                            title: 'Match Scorecard',
+                            files: [file]
+                        }).catch(console.error);
+                    } else {
+                        // Fallback for browsers that don't support Web Share API
+                        const url = URL.createObjectURL(blob);
+                        const link = document.createElement('a');
+                        link.href = url;
+                        link.download = `scorecard_${matchData.code}.png`;
+                        link.click();
+                        URL.revokeObjectURL(url);
+                    }
+                });
+            });
         }
 
         // Navigation
